@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home">
+
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hi , Manas Ji "
+
+        android:layout_marginStart="20dp"
+        android:textSize="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/salutationText"
+        android:textColor="@color/black"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="7dp"
+        android:layout_marginStart="20dp"
+        android:id="@+id/registrationCard"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toStartOf="@id/thesis"
+
+        android:layout_height="200dp"
+        android:elevation="5dp"
+        app:layout_constraintTop_toBottomOf="@id/salutationText"
+        app:layout_constraintStart_toStartOf="parent"
+
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/registration"
+                android:id="@+id/image1"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="25dp"
+                android:id="@+id/textStudentProfileText"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Registration"
+                app:layout_constraintStart_toStartOf="@id/image1"
+                app:layout_constraintEnd_toEndOf="@id/image1"
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintTop_toBottomOf="@+id/image1"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="7dp"
+        app:cardBackgroundColor="#7F3BA8BE"
+        android:id="@+id/thesis"
+        android:layout_marginEnd="20dp"
+        android:layout_weight="1.0"
+        android:elevation="5dp"
+        app:layout_constraintStart_toEndOf="@id/registrationCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/salutationText"
+
+        >
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/openbook"
+                android:id="@+id/image2"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="Publication"
+                app:layout_constraintStart_toStartOf="@id/image2"
+                app:layout_constraintEnd_toEndOf="@id/image2"
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintTop_toBottomOf="@+id/image2"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="7dp"
+        android:id="@+id/courseWorkCardView"
+        android:layout_marginEnd="20dp"
+        android:layout_weight="1.0"
+        android:elevation="5dp"
+        app:layout_constraintStart_toEndOf="@id/registrationCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thesis"
+
+        >
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/graduation_hat"
+                android:id="@+id/courseworkImage"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Course work"
+                app:layout_constraintStart_toStartOf="@id/courseworkImage"
+                app:layout_constraintEnd_toEndOf="@id/courseworkImage"
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintTop_toBottomOf="@+id/courseworkImage"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="7dp"
+        app:cardBackgroundColor="#7FCE7672"
+        android:id="@+id/RAC_upload"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1.0"
+        android:elevation="5dp"
+       app:layout_constraintStart_toStartOf="@id/registrationCard"
+        app:layout_constraintStart_toEndOf="@id/registrationCard"
+        app:layout_constraintEnd_toEndOf="@id/registrationCard"
+        app:layout_constraintTop_toBottomOf="@id/registrationCard"
+
+        >
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/form"
+                android:id="@+id/image3"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="RAC"
+                app:layout_constraintStart_toStartOf="@id/image3"
+                app:layout_constraintEnd_toEndOf="@id/image3"
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintTop_toBottomOf="@+id/image3"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

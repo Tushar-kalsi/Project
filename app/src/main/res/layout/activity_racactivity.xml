@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RACActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/titletext"
+        android:textSize="30dp"
+        android:text="RAC Registration \n          Form"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_height="63dp"
+        android:layout_width="wrap_content"
+        android:id="@+id/enrollmentNumber"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/enrollmentLayout"
+        app:layout_constraintBottom_toBottomOf="@id/enrollmentLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Enrollment number"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enrollmentLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="100dp"
+        android:hint="Enrollment Number"
+        android:textColorHint="#A7A7A7"
+        app:boxStrokeColor="#EAEAEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+        app:layout_constraintTop_toTopOf="@id/titletext">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/enrollmentNumberInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:editable="false"
+            android:textColor="#5B5B5B"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_height="63dp"
+        android:layout_width="0dp"
+
+        android:id="@+id/dateOfRegistration"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/enrollmentNumber"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/dorlayout"
+        app:layout_constraintBottom_toBottomOf="@id/dorlayout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Date of \nregistration"
+        />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dorlayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="63dp"
+        android:drawableEnd="@drawable/calendar"
+        android:hint="Date of Reg."
+        android:textColorHint="#A7A7A7"
+        app:boxStrokeColor="#EAEAEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+        app:layout_constraintTop_toBottomOf="@id/enrollmentLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dorinput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:textColor="#5B5B5B"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_height="63dp"
+        android:layout_width="0dp"
+        android:id="@+id/batchText"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/enrollmentNumber"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/batchLayout"
+        app:layout_constraintBottom_toBottomOf="@id/batchLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Batch "
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/batchLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="63dp"
+        android:drawableEnd="@drawable/calendar"
+        android:hint="Batch"
+        android:textColorHint="#A7A7A7"
+        app:boxStrokeColor="#EAEAEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+        app:layout_constraintTop_toBottomOf="@id/dateOfRegistration">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/batchInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:textColor="#5B5B5B"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:text="Document upload "
+        app:layout_constraintTop_toBottomOf="@id/batchLayout"
+        app:layout_constraintStart_toStartOf="@id/batchLayout"
+        app:layout_constraintEnd_toEndOf="@id/batchLayout"
+        android:backgroundTint="@color/white"
+        android:id="@+id/uploadButton"
+        android:textColor="@color/black"
+        android:drawableEnd="@drawable/upload"
+        />
+
+
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="271dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        android:text="Submit "
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uploadButton" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
