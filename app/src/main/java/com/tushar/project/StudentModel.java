@@ -3,12 +3,111 @@ package com.tushar.project;
 public class StudentModel {
     public static final int QIP_MODEL=1;
     public static final int NONQIP_MODEL=2;
+    public static final int RACMODEL=3;
+    public static final int COURSEWORK=4;
+    public static final int PUBLICARION=5;
+
+
 
     private int type;
+    private String journal;
+    private String dop;
+    private String journal_type;
+    private String title;
+
+    public String getJournal() {
+        return journal;
+    }
+
+    public void setJournal(String journal) {
+        this.journal = journal;
+    }
+
+    public String getDop() {
+        return dop;
+    }
+
+    public void setDop(String dop) {
+        this.dop = dop;
+    }
+
+    public String getJournal_type() {
+        return journal_type;
+    }
+
+    public void setJournal_type(String journal_type) {
+        this.journal_type = journal_type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     private int id;
+    private String fullName;
+    private String subjecCode;
+    private String subjectName;
+
     private String EN , Username , LastName , FirstName , DepartmentNumber , FatherName;
     private String Address;
     private String DOB;
+    private String DOR;
+    private String batch;
+    private String SuperVisor;
+    private String coSuperVisor;
+    private String document;
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getDOR() {
+        return DOR;
+    }
+
+    public void setDOR(String DOR) {
+        this.DOR = DOR;
+    }
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }
+
+    public String getSuperVisor() {
+        return SuperVisor;
+    }
+
+    public void setSuperVisor(String superVisor) {
+        SuperVisor = superVisor;
+    }
+
+    public String getCoSuperVisor() {
+        return coSuperVisor;
+    }
+
+    public void setCoSuperVisor(String coSuperVisor) {
+        this.coSuperVisor = coSuperVisor;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public void setDocument(String document) {
+        this.document = document;
+    }
 
     public String getAddress() {
         return Address;
@@ -90,5 +189,19 @@ public class StudentModel {
         return FatherName;
     }
 
+    public String getSubjecCode() {
+        return subjecCode;
+    }
 
+    public void setSubjecCode(String subjecCode) {
+        this.subjecCode = subjecCode;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
 }

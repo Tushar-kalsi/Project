@@ -66,9 +66,41 @@ public class ThesisSubmission extends AppCompatActivity  implements AdapterView.
 
         binding= DataBindingUtil.setContentView(this , R.layout.activity_thesis_submission);
         preferences= PreferenceManager.getDefaultSharedPreferences(getApplication());
-        customDialog=new CustomDialog(this , "Upload Image .... ");
+
         requestQueue=Volley.newRequestQueue(this);
 
+        int type=preferences.getInt("type", 1) ;
+
+        if(type==2 || type ==3){
+            customDialog=new CustomDialog(this , "Loading, Please wait .... ");
+
+            Intent intent=getIntent();
+
+            String en=intent.getStringExtra("en");
+
+
+            binding.typeSpinner.setVisibility(View.GONE);
+            binding.typeTextView.setVisibility(View.VISIBLE);
+            makeApiCallToGet(en);
+
+
+
+            binding.titletext.setText("View Publication");
+            binding.button4.setText("Back");
+            binding.button4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    finish();
+
+                }
+            });
+
+        }else{
+
+            binding.studentNmaeInput.setText(preferences.getString("name" ," "));
+
+            customDialog=new CustomDialog(this , "Upload Image .... ");
         SetDate setDate=new SetDate(binding.dateofpublicatoinInput, this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.array_jornals, android.R.layout.simple_spinner_item);
@@ -114,7 +146,7 @@ public class ThesisSubmission extends AppCompatActivity  implements AdapterView.
 
                         }else{
 
-                            if(binding.dateofpublicatoinInput.getText()!=null || binding.dateofpublicatoinInput.getText().toString().trim().length()==0){
+                            if(binding.dateofpublicatoinInput.getText()==null || binding.dateofpublicatoinInput.getText().toString().trim().length()==0){
 
                                 binding.datepublicationLayout.setError("Invalid DOP");
                             }else{
@@ -138,8 +170,84 @@ public class ThesisSubmission extends AppCompatActivity  implements AdapterView.
                 }
             }
         });
+        }
+
     }
 
+    private void makeApiCallToGet(String enrollment_number){
+
+
+        String url =getString(R.string.domain_url)+"publication?en="+enrollment_number;
+        Log.d("errorVolley", url);
+        customDialog.startDialog();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject myJsonObject = new JSONObject(response);
+
+                            boolean success= myJsonObject.optBoolean("success");
+                            JSONObject data =myJsonObject.optJSONObject("message");
+
+                            if(success){
+
+                                if(data!=null ){
+                                    binding.studentNmaeInput.setText(data.optString("name"));
+                                    binding.titleNameInput.setText(data.optString("title"));
+                                    binding.enrollmentInout.setText (data.optString("EN"));
+                                    binding.journalInput.setText (data.optString("journal"));
+                                    binding.dateofpublicatoinInput.setText(data.optString("dop"));
+                                    binding.typeTextView.setText( data.optString("type"));
+                                    binding.enrollmentInout.setText(data.optString("en"));
+                                    String doc= data.optString("doc");
+
+                                    if(!doc.equals("null")){
+
+                                        binding.uploadButton.setText("View Document");
+                                        binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+
+                                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(doc));
+                                                startActivity(browserIntent);
+
+
+                                            }
+                                        });
+                                    }
+
+                                }
+                            }
+
+                        }
+                        catch (Exception e){
+
+
+                        }
+
+                        customDialog.endDialog();
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ThesisSubmission.this , "There is some error ", Toast.LENGTH_LONG).show();
+
+                customDialog.endDialog();
+
+
+            }
+        });
+
+// Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
+
+    }
 
     private void uploadThesis(String title, String enrollmentNumber , String journal, String dop , String type ) {
 

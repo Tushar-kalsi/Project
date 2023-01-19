@@ -51,18 +51,19 @@ public class QIP_registration extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-
-
+        dialog = new CustomDialog(this, "Saving data .....");
+        requestQueue = Volley.newRequestQueue(this);
 
 
         preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         int type =preferences.getInt("type", 1);
-        if(type==2){
+        if(type==2 || type ==3){
 
             Intent intent=getIntent();
 
             username = intent.getStringExtra("username");
+
             getQIP();
 
             binding.button4.setVisibility(View.GONE);
@@ -72,6 +73,15 @@ public class QIP_registration extends AppCompatActivity {
             binding.lastNameInpout.setEnabled(false);
             binding.fatherNameInput.setEnabled(false);
 
+            binding.titletext.setText("Student Information");
+            binding.button4.setText("Back");
+            binding.button4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    finish();
+                }
+            });
         }else {
 
             username = preferences.getString("username", " ");
@@ -80,8 +90,8 @@ public class QIP_registration extends AppCompatActivity {
 
             Log.d("errorVolley", username);
 
-            dialog = new CustomDialog(this, "Saving data .....");
-            requestQueue = Volley.newRequestQueue(this);
+
+
             getQIP();
 
 
@@ -162,7 +172,7 @@ public class QIP_registration extends AppCompatActivity {
                                 binding.firstNameInput.setText(data.optString("firstname"));
                                 binding.deptRegInput.setText(data.optString("dept_number"));
                                 binding.fatherNameInput.setText(data.optString("fathername"));
-                                binding.button4.setText("Modify");
+
 
 
                             }

@@ -48,6 +48,7 @@ public class NONQIP_registration extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this , R.layout.activity_nonqip_registration);
 
+        dialog = new CustomDialog(this, "Saving Data .....");
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -57,7 +58,7 @@ public class NONQIP_registration extends AppCompatActivity {
         preferences= PreferenceManager.getDefaultSharedPreferences(getApplication());
         int type=preferences.getInt("type", 1);
 
-        if(type==2){
+        if(type==2 || type ==3){
 
 
             Intent intent=getIntent();
@@ -65,7 +66,7 @@ public class NONQIP_registration extends AppCompatActivity {
             username = intent.getStringExtra("username");
             getQIP();
 
-            binding.button4.setVisibility(View.GONE);
+
             binding.firstNameInput.setEnabled(false);
             binding.deptRegInput.setEnabled(false);
             binding.enrollmentInout.setEnabled(false);
@@ -74,6 +75,9 @@ public class NONQIP_registration extends AppCompatActivity {
             binding.addressInput.setEnabled(false);
             binding.DOBinput.setEnabled(false);
 
+            binding.titletext.setText("Student Information");
+            binding.button4.setVisibility(View.GONE);
+
 
 
         }else {
@@ -81,7 +85,7 @@ public class NONQIP_registration extends AppCompatActivity {
             id = preferences.getInt("id", 1);
 
 
-            dialog = new CustomDialog(this, "Saving Data .....");
+
             getQIP();
             SetDate setDate = new SetDate(binding.DOBinput, this);
 

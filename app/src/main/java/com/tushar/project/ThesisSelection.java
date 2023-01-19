@@ -2,6 +2,6 @@ package com.tushar.project;
 
 public interface ThesisSelection {
 
-    public void selectedOption(int type);
+     void selectedOption(int type);
 
 }

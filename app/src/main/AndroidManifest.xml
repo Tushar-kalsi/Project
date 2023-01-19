@@ -19,6 +19,13 @@
         android:theme="@style/Theme.Project"
         tools:targetApi="31">
         <activity
+            android:name=".RAC_HOD"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".StudentListAcitvity"
             android:exported="false">
             <meta-data
@@ -28,7 +35,7 @@
 
         <meta-data
             android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/file_path"></meta-data>
+            android:resource="@xml/file_path" />
 
         <activity
             android:name=".SplashScreen"
@@ -45,7 +52,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".CreatePublication"
+            android:name=".HOD_racVerifyActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

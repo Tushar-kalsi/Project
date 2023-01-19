@@ -6,8 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,12 +27,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentListAcitvity extends AppCompatActivity  implements RecyclerViewButtonClickListener{
+public class StudentListAcitvity extends AppCompatActivity  implements RecyclerViewButtonClickListener {
 
 
     public static final int QIP_STUDENT=1;
     public static final int NONQIP_STUDENT=2;
     public static final int RAC_STUDENT=3;
+    public static final int COURSE_WORK=4;
+    public static final int PUBLICARION=5;
+    public static final int HODVIEW=3;
+
 
     CustomDialog dialog;
     RequestQueue requestQueue;
@@ -37,12 +44,17 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
     ActivityStudentListBinding binding;
     AdapterRecyclerview adapterRecyclerview;
     int val_type;
+    SharedPreferences sharedPreferences;
+    int viewType=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding= DataBindingUtil.setContentView(this , R.layout.activity_student_list);
+
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getApplication());
+        viewType=sharedPreferences.getInt("type", 1);
 
         requestQueue= Volley.newRequestQueue(this);
         dataList=new ArrayList<>();
@@ -71,12 +83,242 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
 
             makeRacStudentCall();
 
+        }else if (val_type==COURSE_WORK){
+
+            makeCourseWorkCall();
+
+        }else if (val_type==PUBLICARION){
+
+            makePublicationCall();
+
         }
 
 
 
     }
+
+    public void makePublicationCall(){
+
+
+        String url=getString(R.string.domain_url)+"getallstudents?type=publication";
+
+
+        dialog.startDialog();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject myJsonObject = new JSONObject(response);
+
+                            boolean success= myJsonObject.optBoolean("success");
+                            JSONArray  data =myJsonObject.optJSONArray("results1");
+
+                            if(success && data!=null){
+
+                                for(int i =0;i< data.length();i++){
+
+
+                                    JSONObject obj=data.getJSONObject(i) ;
+                                    Log.d("errorVolley", "data "+obj.toString());
+
+                                    StudentModel studentModel=new StudentModel();
+                                    studentModel.setType(StudentModel.COURSEWORK);
+                                    studentModel.setFirstName(obj.optString("name"));
+                                    studentModel.setLastName(" ");
+                                    studentModel.setJournal(obj.optString("journal"));
+                                    studentModel.setDop(obj.optString("dop"));
+                                    studentModel.setEN(obj.optString("EN"));
+                                    studentModel.setDocument(obj.optString("Document"));
+
+
+                                    dataList.add(studentModel);
+
+
+                                }
+
+                                adapterRecyclerview.notifyDataSetChanged();
+
+
+                            }
+
+                        }
+                        catch (Exception e){
+
+
+                        }
+
+                        dialog.endDialog();
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("errorVolley", error.toString().trim());
+                Toast.makeText(StudentListAcitvity.this , "There is some error ", Toast.LENGTH_LONG).show();
+
+                dialog.endDialog();
+
+
+            }
+        });
+
+// Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
+
+
+
+
+    }
+    public void makeCourseWorkCall(){
+        String url=getString(R.string.domain_url)+"getallstudents?type=coursework";
+
+
+        dialog.startDialog();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject myJsonObject = new JSONObject(response);
+
+                            boolean success= myJsonObject.optBoolean("success");
+                            JSONArray  data =myJsonObject.optJSONArray("results1");
+
+                            if(success && data!=null){
+
+                                for(int i =0;i< data.length();i++){
+
+
+                                    JSONObject obj=data.getJSONObject(i) ;
+                                    Log.d("errorVolley", "data "+obj.toString());
+
+                                    StudentModel studentModel=new StudentModel();
+                                    studentModel.setType(StudentModel.COURSEWORK);
+                                    studentModel.setFirstName(obj.optString("name"));
+                                    studentModel.setLastName(" ");
+
+                                    studentModel.setEN(obj.optString("EN"));
+
+                                    dataList.add(studentModel);
+
+
+                                }
+
+                                adapterRecyclerview.notifyDataSetChanged();
+
+
+                            }
+
+                        }
+                        catch (Exception e){
+
+
+                        }
+
+                        dialog.endDialog();
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("errorVolley", error.toString().trim());
+                Toast.makeText(StudentListAcitvity.this , "There is some error ", Toast.LENGTH_LONG).show();
+
+                dialog.endDialog();
+
+
+            }
+        });
+
+// Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
+
+
+
+
+
+    }
     public void makeRacStudentCall(){
+
+        String url=getString(R.string.domain_url)+"getallstudents?type=rac";
+
+
+        dialog.startDialog();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject myJsonObject = new JSONObject(response);
+
+                            boolean success= myJsonObject.optBoolean("success");
+                            JSONArray  data =myJsonObject.optJSONArray("results1");
+
+                            if(success && data!=null){
+
+                                for(int i =0;i< data.length();i++){
+
+                                    JSONObject obj=data.getJSONObject(i) ;
+                                    StudentModel studentModel=new StudentModel();
+                                    studentModel.setType(StudentModel.RACMODEL);
+                                    studentModel.setFullName(obj.optString("name"));
+                                    studentModel.setEN(obj.optString("EN"));
+                                    studentModel.setDOR(obj.optString("DOR"));
+                                    studentModel.setBatch(obj.optString("Batch"));
+                                    studentModel.setSuperVisor("SuperVisor");
+                                    studentModel.setCoSuperVisor("CoSupervisor");
+                                    studentModel.setDocument("Document");
+
+
+                                    dataList.add(studentModel);
+
+
+                                }
+
+                                adapterRecyclerview.notifyDataSetChanged();
+
+
+
+
+
+                            }
+
+                        }
+                        catch (Exception e){
+
+
+                        }
+
+                        dialog.endDialog();
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("errorVolley", error.toString().trim());
+                Toast.makeText(StudentListAcitvity.this , "There is some error ", Toast.LENGTH_LONG).show();
+
+                dialog.endDialog();
+
+
+            }
+        });
+
+// Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
 
 
     }
@@ -87,6 +329,7 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
         if(type==QIP_STUDENT){
 
             url+="qip";
+
 
         }else{
             url+="nonqip";
@@ -123,7 +366,7 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
                                     studentModel.setDepartmentNumber(obj.optString("DeptNumber"));
                                     studentModel.setFirstName(obj.optString("FirstName"));
                                     studentModel.setLastName(obj.optString("LastName"));
-                                    studentModel.setLastName(obj.optString("UserName"));
+                                    studentModel.setUsername(obj.optString("UserName"));
                                     studentModel.setEN(obj.optString("EN"));
 
                                     dataList.add(studentModel);
@@ -174,11 +417,46 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
         if(val_type==QIP_STUDENT){
             Intent intent=new Intent(this , QIP_registration.class);
             intent.putExtra("username", studentModel.getUsername());
+            Log.d("errorVolley", "username us "+studentModel.getUsername());
+
             startActivity(intent);
 
-        }else{
+        }else if(val_type==NONQIP_STUDENT){
             Intent intent=new Intent(this , NONQIP_registration.class);
             intent.putExtra("username", studentModel.getUsername());
+            startActivity(intent);
+
+        }else if(val_type==RAC_STUDENT && viewType!=HODVIEW){
+
+            Intent intent=new Intent(this , RACActivity.class);
+            intent.putExtra("type", 3);
+            intent.putExtra("en", studentModel.getEN());
+            startActivity(intent);
+
+        }else if(val_type==COURSE_WORK){
+
+
+            Intent intent=new Intent(this , CourseWork.class);
+            intent.putExtra("type", 4);
+
+            intent.putExtra("en", studentModel.getEN());
+            Log.d("kacb", "here "+studentModel.getEN());
+            startActivity(intent);
+
+        }else if(val_type==PUBLICARION){
+
+            Intent intent=new Intent(this , ThesisSubmission.class);
+            intent.putExtra("type", 5);
+            intent.putExtra("en", studentModel.getEN());
+            startActivity(intent);
+
+
+        }else if (val_type==RAC_STUDENT && viewType==HODVIEW){
+
+
+            Intent intent=new Intent(this , RAC_HOD.class);
+            intent.putExtra("en", studentModel.getEN());
+            Log.d("ianscvla", "inside this on "+studentModel.getEN());
             startActivity(intent);
 
         }

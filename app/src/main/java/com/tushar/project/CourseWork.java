@@ -48,6 +48,8 @@ import java.util.Map;
 
 public class CourseWork extends AppCompatActivity {
 
+    public static final int TEACHER_VIEW=2;
+
     PdfRenderer renderer;
     RequestQueue requestQueue ;
     int attempt=0;
@@ -60,6 +62,7 @@ public class CourseWork extends AppCompatActivity {
     StorageReference storageRef;
     CustomDialog dialog;
     ActivityCourseWorkBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,43 +70,167 @@ public class CourseWork extends AppCompatActivity {
         binding=DataBindingUtil.setContentView(this , R.layout.activity_course_work);
 
         requestQueue= Volley.newRequestQueue(this);
-
         preferences= PreferenceManager.getDefaultSharedPreferences(getApplication());
 
         enrollment_number=preferences.getString("enrollment_number", " ");
-        Log.d("errorVolley", enrollment_number+" enrollment numnber ");
-
+        int type=preferences.getInt("type",1);
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://project-44332.appspot.com");
         storageRef = storage.getReference();
         dialog=new CustomDialog(this, "Loading ...." );
 
-        getAllCourseWork();
-        binding.uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("errorVolley", "clicked ");
+
+        if(type==TEACHER_VIEW || type==3){
+
+            Intent intent=getIntent();
+            String en =intent.getStringExtra("en");
+
+            binding.titletext.setText("Course Work \nInformation");
+            makeApiCall(en);
+            binding.subjectNameInput.setEnabled(false);
+            binding.subjectCodeInput.setEnabled(false);
+
+            binding.button4.setText("Back");
+
+            binding.button4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
 
 
-                if(attempt<4) {
-                    Toast.makeText(CourseWork.this, "You can only Upload document on " + (4 - attempt) + " complete Course work registration ", Toast.LENGTH_LONG).show();
-                }else{
 
-                    accessPdf();
+        }else{
 
+
+
+            Log.d("errorVolley", enrollment_number+" enrollment numnber ");
+
+
+            String name =preferences.getString("name","");
+            binding.nameInput.setText(name);
+            getAllCourseWork();
+            binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("errorVolley", "clicked ");
+
+
+                    if(attempt<4) {
+                        Toast.makeText(CourseWork.this, "You can only Upload document on " + (4 - attempt) + " complete Course work registration ", Toast.LENGTH_LONG).show();
+                    }else{
+
+                        accessPdf();
+
+
+                    }
 
                 }
+            });
 
-            }
-        });
+            binding.button4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        binding.button4.setOnClickListener(new View.OnClickListener() {
+                    makePostRequest();
+                }
+            });
+
+        }
+
+
+    }
+    private void makeApiCall(String en){
+
+
+        String url =getString(R.string.domain_url)+"coursework?en="+en;
+        Log.d("errorVolley", url +"  url " );
+
+
+        dialog.startDialog();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject myJsonObject = new JSONObject(response);
+
+                            boolean success= myJsonObject.optBoolean("success");
+
+
+                            if(success){
+                                JSONArray data =myJsonObject.optJSONArray("results");
+                                if(data!=null && data.length()>0){
+
+
+                                    attempt=data.length();
+                                    String subjectName="";
+                                    String subjectCode="";
+                                    String document="";
+                                    for(int i =0;i<data.length();i++){
+                                        JSONObject jsonObject= (JSONObject) data.get(i);
+                                        String naem =jsonObject.optString("name");
+
+                                        subjectCode += jsonObject.optString("SubCode")+"\n";
+                                        subjectName += jsonObject.optString("SubName")+"\n";
+
+                                        String en=jsonObject.optString("EN");
+                                         document= jsonObject.optString("Document");
+
+                                        binding.enrollmentNumberInput.setText(en);
+                                        binding.nameInput.setText(naem);
+
+                                    }
+
+
+
+                                    binding.subjectNameInput.setText(subjectName.trim());
+                                    binding.subjectCodeInput.setText(subjectCode.trim());
+
+                                    if(document.equals("null")){
+
+                                        binding.uploadButton.setVisibility(View.GONE);
+
+                                    }else{
+
+                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(document));
+                                        startActivity(browserIntent);
+
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+                        catch (Exception e){
+
+
+                        }
+
+                        dialog.endDialog();
+
+
+                    }
+                }, new Response.ErrorListener() {
             @Override
-            public void onClick(View view) {
+            public void onErrorResponse(VolleyError error) {
+                Log.d("errorVolley", error.toString().trim());
+                Toast.makeText(CourseWork.this , "There is some error ", Toast.LENGTH_LONG).show();
 
-                makePostRequest();
+                dialog.endDialog();
+
+
             }
         });
+
+// Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
 
     }
 

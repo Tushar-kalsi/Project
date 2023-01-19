@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/titletext"
             android:textSize="30dp"
-            android:text="Registration Form \nQIP Students"
+            android:text="Registration Form \nNON-QIP Students"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +25,8 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
     RegistrationDialog registrationDialog;
     ThesisDialog thesisSelectionDialog ;
     int view;
+    public static final int HOD_VIEW=3;
+
     public static final int TEACHER_VIEW=2;
 
 
@@ -37,15 +40,21 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
         String name =preferences.getString("name", "");
         view =preferences.getInt("type", 1);
         binding.salutationText.setText("Hi, "+name+" ji ");
+        registrationDialog = new RegistrationDialog(this, (RegistrationSelection) this);
+
         if(view==TEACHER_VIEW){
 
             performTeacherView();
 
 
+        }else if (view ==HOD_VIEW){
+
+            performHodView();
+
         }else {
 
 
-            registrationDialog = new RegistrationDialog(this, (RegistrationSelection) this);
+
             thesisSelectionDialog = new ThesisDialog(home.this, (ThesisSelection) this);
 
             id = preferences.getInt("id", 1);
@@ -98,18 +107,20 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
 
 
 
-              if(view==TEACHER_VIEW){
+              if(view==TEACHER_VIEW || view==HOD_VIEW){
                   Intent intent=new Intent(this ,StudentListAcitvity.class);
                   intent.putExtra("student" , 1);
                   startActivity(intent);
 
               }else{
+
                   startActivity(new Intent(this , QIP_registration.class));
+
               }
 
         }else{
 
-            if(view==TEACHER_VIEW){
+            if(view==TEACHER_VIEW || HOD_VIEW==3){
                 Intent intent=new Intent(this ,StudentListAcitvity.class);
                 intent.putExtra("student" , 2);
                 startActivity(intent);
@@ -124,16 +135,36 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
     @Override
     public void selectedOption(int type) {
 
-        thesisSelectionDialog.endDialog();
 
-        if(type==1){
+        if(view==3){
 
-            startActivity(new Intent(home.this , ThesisSubmission.class));
+            if(type==1){
+                Intent intent=new Intent(home.this, StudentListAcitvity.class);
+                intent.putExtra("student",3);
+
+                startActivity(intent);
+
+
+            }else{
+
+                startActivity(new Intent(this , RAC_HOD.class ));
+
+            }
 
         }else{
 
-            startActivity(new Intent(home.this, ViewPublication.class));
+            thesisSelectionDialog.endDialog();
 
+            if (type == 1) {
+
+                startActivity(new Intent(home.this, ThesisSubmission.class));
+
+            } else {
+
+                startActivity(new Intent(home.this, ViewPublication.class));
+
+
+            }
 
         }
     }
@@ -179,6 +210,14 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
     private void performTeacherView(){
 
 
+        binding.statusCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+        binding.statusCardView.setVisibility(View.VISIBLE);
         binding.textStudentProfileText.setText("Student Profile");
 
         binding.registrationCard.setOnClickListener(new View.OnClickListener() {
@@ -195,7 +234,31 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
             public void onClick(View view) {
 
                 Intent intent=new Intent(home.this , StudentListAcitvity.class);
-                intent.putExtra("student", );
+                intent.putExtra("student",3 );
+                startActivity(intent);
+
+
+            }
+        });
+
+        binding.courseWorkCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(home.this , StudentListAcitvity.class);
+                intent.putExtra("student",StudentModel.COURSEWORK);
+                startActivity(intent);
+
+
+            }
+        });
+
+        binding.thesis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(home.this , StudentListAcitvity.class);
+                intent.putExtra("student",StudentModel.PUBLICARION);
                 startActivity(intent);
 
 
@@ -203,6 +266,75 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
         });
 
 
+
+
+    }
+    public void performHodView(){
+        binding.vaerifyDocumentCard.setVisibility(View.VISIBLE);
+
+        Hod_RAC_dialog hod_rac_dialog=new Hod_RAC_dialog(this , (ThesisSelection) this);
+
+        binding.statusCardView.setVisibility(View.VISIBLE);
+        binding.statusCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
+        binding.vaerifyDocumentCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(home.this , HOD_racVerifyActivity.class));
+
+            }
+        });
+        binding.RACUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                hod_rac_dialog.startDialog();
+
+            }
+        });
+
+        binding.statusCardView.setVisibility(View.VISIBLE);
+        binding.textStudentProfileText.setText("Student Profile");
+
+        binding.registrationCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                registrationDialog.startDialog();
+
+            }
+        });
+
+        binding.courseWorkCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d("kacb", "im a clicked");
+                Intent intent=new Intent(home.this , StudentListAcitvity.class);
+                intent.putExtra("student",StudentModel.COURSEWORK);
+                startActivity(intent);
+
+
+            }
+        });
+
+        binding.thesis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(home.this , StudentListAcitvity.class);
+                intent.putExtra("student",StudentModel.PUBLICARION);
+                startActivity(intent);
+
+
+            }
+        });
 
 
 

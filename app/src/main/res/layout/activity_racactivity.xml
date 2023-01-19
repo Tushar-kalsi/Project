@@ -27,6 +27,47 @@
     <TextView
         android:layout_marginStart="20dp"
         android:layout_height="63dp"
+        android:layout_width="0dp"
+        android:id="@+id/nameText"
+        app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/nameLayout"
+        app:layout_constraintBottom_toBottomOf="@id/nameLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Name"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="100dp"
+        android:hint=" Name "
+        android:textColorHint="#A7A7A7"
+        app:boxStrokeColor="#EAEAEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+        app:layout_constraintTop_toTopOf="@id/titletext">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:editable="false"
+            android:textColor="#5B5B5B"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_height="63dp"
         android:layout_width="wrap_content"
         android:id="@+id/enrollmentNumber"
         android:gravity="center"
@@ -44,13 +85,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_height="63dp"
-        android:layout_marginTop="100dp"
+
         android:hint="Enrollment Number"
         android:textColorHint="#A7A7A7"
         app:boxStrokeColor="#EAEAEE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
-        app:layout_constraintTop_toTopOf="@id/titletext">
+        app:layout_constraintTop_toBottomOf="@id/nameLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enrollmentNumberInput"
@@ -148,13 +189,108 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_height="63dp"
+        android:layout_width="0dp"
+        android:id="@+id/superVisor"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/enrollmentNumber"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/superVisorSpinner"
+        app:layout_constraintBottom_toBottomOf="@id/superVisorSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Supervisor "
+        />
 
+
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/batchLayout"
+        app:layout_constraintStart_toStartOf="@id/batchLayout"
+        app:layout_constraintEnd_toEndOf="@id/batchLayout"
+        android:layout_height="53dp"
+        android:id="@+id/superVisorSpinner"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:text="Not Set"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/batchLayout"
+        app:layout_constraintStart_toStartOf="@id/batchLayout"
+        app:layout_constraintEnd_toEndOf="@id/batchLayout"
+        android:layout_height="53dp"
+        android:id="@+id/superVisorTextView"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:text="Not Set"
+        android:gravity="center"
+        />
+
+
+
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_height="63dp"
+        android:layout_width="0dp"
+        android:id="@+id/coSuperVisorSpinnerText"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/enrollmentNumber"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/coSuperVisorSpinner"
+        app:layout_constraintBottom_toBottomOf="@id/coSuperVisorSpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Co-Supervisor "
+        />
+
+
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/superVisorSpinner"
+        app:layout_constraintStart_toStartOf="@id/batchLayout"
+        app:layout_constraintEnd_toEndOf="@id/batchLayout"
+        android:layout_height="53dp"
+        android:text="Not Set"
+        android:gravity="center"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:id="@+id/coSuperVisorSpinner"
+
+        />
+
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/superVisorSpinner"
+        app:layout_constraintStart_toStartOf="@id/batchLayout"
+        app:layout_constraintEnd_toEndOf="@id/batchLayout"
+        android:layout_height="53dp"
+        android:text="Not Set"
+        android:gravity="center"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:id="@+id/coSuperVisorSpinner_textview"
+
+        />
 
     <Button
         android:layout_width="0dp"
         android:layout_height="63dp"
         android:text="Document upload "
-        app:layout_constraintTop_toBottomOf="@id/batchLayout"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/coSuperVisorSpinner"
         app:layout_constraintStart_toStartOf="@id/batchLayout"
         app:layout_constraintEnd_toEndOf="@id/batchLayout"
         android:backgroundTint="@color/white"
@@ -162,6 +298,7 @@
         android:textColor="@color/black"
         android:drawableEnd="@drawable/upload"
         />
+
 
 
 

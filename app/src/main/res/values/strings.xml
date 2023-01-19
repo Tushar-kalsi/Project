@@ -24,5 +24,24 @@
         <item>Newspapers</item>
     </string-array>
 
+    <string-array name="array_supervisor">
+        <item>Select SuperVisor</item>
+        <item>Dr. xy  </item>
+        <item>Dr. yy </item>
+        <item>Dr. gk</item>
+        <item>Dr. qe</item>
+        <item>Dr. zz</item>
+    </string-array>
+
+
+    <string-array name="array_cosupervisor">
+        <item>Select Co-SuperVisor</item>
+        <item>Dr. xy  </item>
+        <item>Dr. yy </item>
+        <item>Dr. gk</item>
+        <item>Dr. qe</item>
+        <item>Dr. zz</item>
+    </string-array>
+
 
 </resources>

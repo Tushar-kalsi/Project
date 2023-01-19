@@ -28,6 +28,48 @@
         android:layout_marginStart="20dp"
         android:layout_height="63dp"
         android:layout_width="wrap_content"
+        android:id="@+id/studentname"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/studentnameLayout"
+        app:layout_constraintBottom_toBottomOf="@id/studentnameLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="    Student Name       "
+        />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/studentnameLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="100dp"
+        android:hint="Student name "
+        android:textColorHint="#A7A7A7"
+        app:boxStrokeColor="#EAEAEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/registrationtext"
+        app:layout_constraintTop_toTopOf="@id/titletext">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/studentNmaeInput"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:textColor="#5B5B5B"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_height="63dp"
+        android:layout_width="wrap_content"
         android:id="@+id/registrationtext"
         android:gravity="center"
         android:textStyle="bold"
@@ -46,13 +88,13 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_height="63dp"
-        android:layout_marginTop="100dp"
+
         android:hint="Title name "
         android:textColorHint="#A7A7A7"
         app:boxStrokeColor="#EAEAEE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/registrationtext"
-        app:layout_constraintTop_toTopOf="@id/titletext">
+        app:layout_constraintTop_toBottomOf="@+id/studentnameLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/titleNameInput"
@@ -205,8 +247,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="@+id/type_spinner"
-        app:layout_constraintBottom_toBottomOf="@id/type_spinner"
+        app:layout_constraintTop_toBottomOf="@id/lastNameText"
         app:layout_constraintStart_toStartOf="@id/registrationtext"
         app:layout_constraintEnd_toEndOf="@id/registrationtext"
         android:text="Type"
@@ -215,6 +256,7 @@
 
 
     <Spinner
+
         android:layout_width="0dp"
         android:elevation="5dp"
         android:layout_marginTop="5dp"
@@ -226,13 +268,26 @@
         />
 
 
+    <TextView
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:elevation="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="54dp"
+        android:id="@+id/type_textView"
+        app:layout_constraintStart_toStartOf="@+id/datepublicationLayout"
+        app:layout_constraintEnd_toEndOf="@+id/datepublicationLayout"
+        app:layout_constraintTop_toBottomOf="@+id/datepublicationLayout"
+        />
+
     <Button
         android:layout_width="0dp"
         android:layout_height="63dp"
         android:text="Document upload "
-        app:layout_constraintTop_toBottomOf="@id/type_spinner"
-        app:layout_constraintStart_toStartOf="@id/type_spinner"
-        app:layout_constraintEnd_toEndOf="@id/type_spinner"
+        app:layout_constraintTop_toBottomOf="@id/datepublicationLayout"
+        app:layout_constraintStart_toStartOf="@id/datepublicationLayout"
+        app:layout_constraintEnd_toEndOf="@id/datepublicationLayout"
+        android:layout_marginTop="67dp"
         android:backgroundTint="@color/white"
         android:id="@+id/uploadButton"
         android:textColor="@color/black"

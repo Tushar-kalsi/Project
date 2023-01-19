@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ViewPublication">
+        tools:context=".RAC_HOD">
 
 
         <TextView
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/titletext"
             android:textSize="30dp"
-            android:text="View Publication"
+            android:text="RAC Registration \n          Form"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,78 +27,34 @@
         <TextView
             android:layout_marginStart="20dp"
             android:layout_height="63dp"
-            android:layout_width="wrap_content"
-            android:id="@+id/studentname"
+            android:layout_width="0dp"
+            android:id="@+id/nameText"
+            app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/black"
-            app:layout_constraintTop_toTopOf="@+id/studentnameLayout"
-            app:layout_constraintBottom_toBottomOf="@id/studentnameLayout"
+            app:layout_constraintTop_toTopOf="@+id/nameLayout"
+            app:layout_constraintBottom_toBottomOf="@id/nameLayout"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="    Student Name       "
+            android:text="Name"
             />
-
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/studentnameLayout"
+            android:id="@+id/nameLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_height="63dp"
             android:layout_marginTop="100dp"
-            android:hint="Student name "
+            android:hint=" Name "
             android:textColorHint="#A7A7A7"
             app:boxStrokeColor="#EAEAEE"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/registrationtext"
+            app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
             app:layout_constraintTop_toTopOf="@id/titletext">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/studentNmaeInput"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:textColor="#5B5B5B"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                tools:ignore="TouchTargetSizeCheck" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-
-        <TextView
-            android:layout_marginStart="20dp"
-            android:layout_height="63dp"
-            android:layout_width="wrap_content"
-            android:id="@+id/registrationtext"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            app:layout_constraintTop_toTopOf="@+id/dept_reg_layout"
-            app:layout_constraintBottom_toBottomOf="@id/dept_reg_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="       Title Name       "
-            />
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dept_reg_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_height="63dp"
-            android:hint="Title name "
-            android:textColorHint="#A7A7A7"
-            app:boxStrokeColor="#EAEAEE"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/registrationtext"
-            app:layout_constraintTop_toBottomOf="@id/studentnameLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/titleNameInput"
+                android:id="@+id/nameInput"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:editable="false"
@@ -110,20 +66,18 @@
 
 
         <TextView
-
+            android:layout_marginStart="20dp"
             android:layout_height="63dp"
-            android:layout_width="0dp"
-            android:id="@+id/enrollementNumberText"
+            android:layout_width="wrap_content"
+            android:id="@+id/enrollmentNumber"
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="@+id/enrollmentLayout"
             app:layout_constraintBottom_toBottomOf="@id/enrollmentLayout"
-            app:layout_constraintStart_toStartOf="@id/registrationtext"
-            app:layout_constraintEnd_toEndOf="@id/registrationtext"
-            android:text="Enrollment \n number"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Enrollment number"
             />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/enrollmentLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -132,16 +86,15 @@
             android:layout_marginEnd="20dp"
             android:layout_height="63dp"
 
-
-            android:hint="Enrollement Number"
+            android:hint="Enrollment Number"
             android:textColorHint="#A7A7A7"
             app:boxStrokeColor="#EAEAEE"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/enrollementNumberText"
-            app:layout_constraintTop_toBottomOf="@+id/dept_reg_layout">
+            app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+            app:layout_constraintTop_toBottomOf="@id/nameLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/enrollment_inout"
+                android:id="@+id/enrollmentNumberInput"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:editable="false"
@@ -153,45 +106,43 @@
 
 
         <TextView
-
+            android:layout_marginStart="20dp"
             android:layout_height="63dp"
             android:layout_width="0dp"
-            android:id="@+id/firstnmaeText"
+
+            android:id="@+id/dateOfRegistration"
             android:gravity="center"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/enrollmentNumber"
             android:textColor="@color/black"
-            app:layout_constraintTop_toTopOf="@+id/firstNamelayout"
-            app:layout_constraintBottom_toBottomOf="@id/firstNamelayout"
-            app:layout_constraintStart_toStartOf="@id/registrationtext"
-            app:layout_constraintEnd_toEndOf="@id/registrationtext"
-            android:text="Journal"
+            app:layout_constraintTop_toTopOf="@+id/dorlayout"
+            app:layout_constraintBottom_toBottomOf="@id/dorlayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Date of \nregistration"
             />
 
 
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/firstNamelayout"
+            android:id="@+id/dorlayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_height="63dp"
-            app:layout_constraintTop_toBottomOf="@+id/enrollmentLayout"
-
-            android:hint="Journal"
+            android:drawableEnd="@drawable/calendar"
+            android:hint="Date of Reg."
             android:textColorHint="#A7A7A7"
-
             app:boxStrokeColor="#EAEAEE"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/firstnmaeText"
-            >
+            app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+            app:layout_constraintTop_toBottomOf="@id/enrollmentLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/journalInput"
+                android:id="@+id/dorinput"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:editable="false"
                 android:textColor="#5B5B5B"
+                android:editable="false"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -199,44 +150,41 @@
 
 
         <TextView
-
+            android:layout_marginStart="20dp"
             android:layout_height="63dp"
             android:layout_width="0dp"
-            android:id="@+id/lastNameText"
+            android:id="@+id/batchText"
             android:gravity="center"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/enrollmentNumber"
             android:textColor="@color/black"
-            app:layout_constraintTop_toTopOf="@+id/datepublicationLayout"
-            app:layout_constraintBottom_toBottomOf="@id/datepublicationLayout"
-            app:layout_constraintStart_toStartOf="@id/registrationtext"
-            app:layout_constraintEnd_toEndOf="@id/registrationtext"
-            android:text="Date of \nPublication"
+            app:layout_constraintTop_toTopOf="@+id/batchLayout"
+            app:layout_constraintBottom_toBottomOf="@id/batchLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Batch "
             />
 
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/datepublicationLayout"
+            android:id="@+id/batchLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_height="63dp"
-            app:layout_constraintTop_toBottomOf="@+id/firstNamelayout"
-
-            android:hint="Date of Publication"
+            android:drawableEnd="@drawable/calendar"
+            android:hint="Batch"
             android:textColorHint="#A7A7A7"
-
             app:boxStrokeColor="#EAEAEE"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/lastNameText"
-            >
+            app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+            app:layout_constraintTop_toBottomOf="@id/dateOfRegistration">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dateofpublicatoinInput"
+                android:id="@+id/batchInput"
                 android:layout_width="match_parent"
+                android:editable="false"
                 android:layout_height="55dp"
                 android:textColor="#5B5B5B"
-                android:editable="false"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -244,45 +192,115 @@
 
 
         <TextView
-
+            android:layout_marginStart="20dp"
             android:layout_height="63dp"
             android:layout_width="0dp"
-            android:id="@+id/type"
+            android:id="@+id/superVisor"
             android:gravity="center"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/enrollmentNumber"
             android:textColor="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/lastNameText"
-            app:layout_constraintStart_toStartOf="@id/registrationtext"
-            app:layout_constraintEnd_toEndOf="@id/registrationtext"
-            android:text="Type"
+            app:layout_constraintTop_toTopOf="@+id/superVisorSpinner"
+            app:layout_constraintBottom_toBottomOf="@id/superVisorSpinner"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Supervisor "
             />
 
 
 
-        <TextView
+        <Spinner
             android:layout_width="0dp"
-            android:elevation="5dp"
             android:layout_marginTop="5dp"
-            android:layout_height="54dp"
-            android:id="@+id/type_spinner"
-            app:layout_constraintStart_toStartOf="@+id/datepublicationLayout"
-            app:layout_constraintEnd_toEndOf="@+id/datepublicationLayout"
-            app:layout_constraintTop_toBottomOf="@+id/datepublicationLayout"
+            app:layout_constraintTop_toBottomOf="@+id/batchLayout"
+            app:layout_constraintStart_toStartOf="@id/batchLayout"
+            app:layout_constraintEnd_toEndOf="@id/batchLayout"
+            android:layout_height="53dp"
+            android:id="@+id/superVisorSpinner"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:text="Not Set"
+            android:gravity="center"
             />
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/batchLayout"
+            app:layout_constraintStart_toStartOf="@id/batchLayout"
+            app:layout_constraintEnd_toEndOf="@id/batchLayout"
+            android:layout_height="53dp"
+            android:id="@+id/superVisorTextView"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:text="Not Set"
+            android:gravity="center"
+            />
+
+
+
+
+        <TextView
+            android:layout_marginStart="20dp"
+            android:layout_height="63dp"
+            android:layout_width="0dp"
+            android:id="@+id/coSuperVisorSpinnerText"
+            android:gravity="center"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/enrollmentNumber"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="@+id/coSuperVisorSpinner"
+            app:layout_constraintBottom_toBottomOf="@id/coSuperVisorSpinner"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Co-Supervisor "
+            />
+
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/superVisorSpinner"
+            app:layout_constraintStart_toStartOf="@id/batchLayout"
+            app:layout_constraintEnd_toEndOf="@id/batchLayout"
+            android:layout_height="53dp"
+            android:text="Not Set"
+            android:gravity="center"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:id="@+id/coSuperVisorSpinner"
+
+            />
+
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/superVisorSpinner"
+            app:layout_constraintStart_toStartOf="@id/batchLayout"
+            app:layout_constraintEnd_toEndOf="@id/batchLayout"
+            android:layout_height="53dp"
+            android:text="Not Set"
+            android:gravity="center"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:id="@+id/coSuperVisorSpinner_textview"
+
+            />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="63dp"
-            android:text="Document Link "
-            app:layout_constraintTop_toBottomOf="@id/type_spinner"
-            app:layout_constraintStart_toStartOf="@id/type_spinner"
-            app:layout_constraintEnd_toEndOf="@id/type_spinner"
+            android:text="Document upload "
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@id/coSuperVisorSpinner"
+            app:layout_constraintStart_toStartOf="@id/batchLayout"
+            app:layout_constraintEnd_toEndOf="@id/batchLayout"
             android:backgroundTint="@color/white"
             android:id="@+id/uploadButton"
             android:textColor="@color/black"
-            android:drawableEnd="@drawable/ic_baseline_download_24"
+            android:drawableEnd="@drawable/upload"
             />
+
 
 
 
@@ -298,12 +316,12 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/uploadButton"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/uploadButton" />
+
+
 
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
-

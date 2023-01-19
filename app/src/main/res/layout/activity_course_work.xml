@@ -5,11 +5,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
+    <ScrollView
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".CourseWork">
+
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CourseWork">
+
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,6 +34,49 @@
         android:layout_marginTop="20dp"
         android:textStyle="bold"
         />
+    <TextView
+
+        android:layout_height="63dp"
+        android:layout_width="0dp"
+        android:id="@+id/nametextView"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/name_textViewLayout"
+        app:layout_constraintBottom_toBottomOf="@id/name_textViewLayout"
+        app:layout_constraintStart_toStartOf="@id/enrollmentNumber"
+        app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
+        android:text="Name"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name_textViewLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="100dp"
+        android:hint="Name"
+        android:enabled="false"
+        android:textColorHint="#A7A7A7"
+        app:boxStrokeColor="#EAEAEE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+        app:layout_constraintTop_toTopOf="@id/titletext">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nameInput"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:singleLine="true"
+
+            android:layout_height="55dp"
+            android:textColor="#5B5B5B"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:layout_marginStart="20dp"
@@ -45,13 +98,12 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_height="63dp"
-        android:layout_marginTop="100dp"
         android:hint="Enrollment Number"
         android:textColorHint="#A7A7A7"
         app:boxStrokeColor="#EAEAEE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
-        app:layout_constraintTop_toTopOf="@id/titletext">
+        app:layout_constraintTop_toBottomOf="@id/name_textViewLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/enrollmentNumberInput"
@@ -85,9 +137,10 @@
         android:layout_width="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_height="63dp"
+        android:minHeight="63dp"
         android:layout_marginTop="10dp"
         android:hint="Subject Code"
+        android:layout_height="wrap_content"
         android:textColorHint="#A7A7A7"
         app:boxStrokeColor="#EAEAEE"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +150,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/subjectCodeInput"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:minHeight="55dp"
+            android:layout_height="wrap_content"
             android:textColor="#5B5B5B"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -125,7 +179,8 @@
         android:layout_width="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_height="63dp"
+        android:minHeight="63dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="Subject Name"
         android:textColorHint="#A7A7A7"
@@ -137,7 +192,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/subjectNameInput"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
             android:textColor="#5B5B5B"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -163,22 +219,23 @@
         android:id="@+id/button4"
         android:layout_width="271dp"
         android:layout_height="55dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="75dp"
         android:text="Submit "
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_goneMarginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/uploadButton"
+        app:layout_constraintTop_toBottomOf="@id/subjectNameLayout"
         />
 
 
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>
 

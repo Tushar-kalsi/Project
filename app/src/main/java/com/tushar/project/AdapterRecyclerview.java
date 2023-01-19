@@ -34,8 +34,17 @@ public class AdapterRecyclerview extends RecyclerView.Adapter<ReyclerViewViewHol
     public void onBindViewHolder(@NonNull ReyclerViewViewHolder holder, int position) {
 
         holder.setStudentModel(studentLists.get(position));
-        holder.binding.titleNameText.setText("Name :"+studentLists.get(position).getFirstName()+" "+studentLists.get(position).getLastName());
+
         holder.binding.enrollementNumberText.setText("En. No :"+studentLists.get(position).getEN());
+
+        if(studentLists.get(position).getType()==StudentModel.RACMODEL){
+
+            holder.binding.titleNameText.setText("Name :"+studentLists.get(position).getFullName());
+
+        }else{
+            holder.binding.titleNameText.setText("Name :"+studentLists.get(position).getFirstName()+" "+studentLists.get(position).getLastName());
+
+        }
 
     }
 
@@ -68,6 +77,7 @@ class ReyclerViewViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     }
     @Override
     public void onClick(View view) {
+
         recyclerViewButtonClickListener.onClick(associatedStudentModel);
 
     }

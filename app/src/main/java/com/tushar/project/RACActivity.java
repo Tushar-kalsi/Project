@@ -27,6 +27,9 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -47,9 +50,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.tushar.project.databinding.ActivityRacactivityBinding;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,7 +68,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RACActivity extends AppCompatActivity {
+public class RACActivity extends AppCompatActivity  {
+    public static final int STUDENT_VIEW=1;
+    public static final int TEACHER_VIEW=2;
+    public static final int HOD_VIEW=3;
 
     private static final int PICK_FILE = 1;
     PdfRenderer pdfRenderer;
@@ -76,6 +82,7 @@ public class RACActivity extends AppCompatActivity {
     SharedPreferences preferences;
     StorageReference storageRef;
     CustomDialog customDialog;
+    int view=STUDENT_VIEW;
 
 
     @Override
@@ -85,10 +92,40 @@ public class RACActivity extends AppCompatActivity {
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://project-44332.appspot.com");
         storageRef = storage.getReference();
-        customDialog=new CustomDialog(this, "Uploading Image ...." );
+
         requestQueue= Volley.newRequestQueue(this);
         preferences= PreferenceManager.getDefaultSharedPreferences(getApplication());
-        SetDate setDate=new SetDate(binding.dorinput , this);
+
+        view=preferences.getInt("type", STUDENT_VIEW);
+
+        if(view==TEACHER_VIEW) {
+            customDialog = new CustomDialog(this, "Loading Please wait ....");
+            Intent intent = getIntent();
+            String enNumnber = intent.getStringExtra("en");
+            binding.titletext.setText("RAC Information");
+            binding.enrollmentNumberInput.setEnabled(false);
+            binding.uploadButton.setText("View Document");
+            binding.dateOfRegistration.setEnabled(false);
+            binding.batchInput.setEnabled(false);
+            binding.button4.setText("Back");
+            binding.button4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+            makeRacCall(enNumnber);
+
+
+        }
+        else if (view==STUDENT_VIEW || view==HOD_VIEW){
+
+
+            customDialog=new CustomDialog(this, "Uploading Image ...." );
+            SetDate setDate=new SetDate(binding.dorinput , this);
+            String name =preferences.getString("name", "");
+
+        binding.nameInput.setText(name);
         String enrollment_number =preferences.getString("enrollment_number","");
         binding.enrollmentNumberInput.setText(enrollment_number);
         binding.uploadButton.setOnClickListener(new View.OnClickListener() {
@@ -142,9 +179,20 @@ public class RACActivity extends AppCompatActivity {
                 }
             }
         });
+
+            if(view==HOD_VIEW){
+                binding.enrollmentNumberInput.setEnabled(true );
+                binding.enrollmentNumberInput.setText("");
+                binding.nameInput.setText("");
+                binding.nameInput.setEnabled(true);
+
+            }
+
+
+
+        }
+
     }
-
-
 
 
     private void uploadRac(String batch, String enrollmentNumber , String DOR) {
@@ -299,6 +347,98 @@ public class RACActivity extends AppCompatActivity {
 
     }
 
+    private void makeRacCall(String enNumnber) {
+
+        String url =getString(R.string.domain_url)+"rac?en="+enNumnber;
+        Log.d("errorVolley", url);
+        customDialog.startDialog();
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject myJsonObject = new JSONObject(response);
+
+                            boolean success= myJsonObject.optBoolean("success");
+                            JSONArray data =myJsonObject.optJSONArray("results1");
+
+                            if(success){
+
+
+                                for(int i=0;i<data.length();i++){
+
+                                    JSONObject jsonObject=data.getJSONObject(i);
+
+                                    binding.nameInput.setText(jsonObject.optString("name"));
+                                    binding.enrollmentNumberInput.setText(jsonObject.optString("EN"));
+                                    binding.dorinput.setText(jsonObject.optString("DOR"));
+                                    binding.batchInput.setText(jsonObject.optString("Batch"));
+                                    String supervisor=jsonObject.optString("SuperVisor");
+                                    String coSuperVisor=jsonObject.optString("CoSupervisor");
+                                    String documentLink=jsonObject.optString("Document");
+
+
+
+                                    binding.dorinput.setText(jsonObject.optString("DOR"));
+
+                                    if(view==TEACHER_VIEW) {
+                                        if (!supervisor.equals("null"))
+                                            binding.superVisorTextView.setText(supervisor);
+                                        if (!coSuperVisor.equals("null"))
+                                            binding.coSuperVisorSpinnerTextview.setText(coSuperVisor);
+
+                                    }else{
+
+                                        binding.button4.setVisibility(View.VISIBLE);
+
+                                    }
+                                    binding.uploadButton.setText("View Document");
+
+                                    binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Log.d("errorVolley", "clicked "+documentLink);
+
+                                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(documentLink));
+                                            startActivity(browserIntent);
+                                        }
+                                    });
+
+
+                                }
+
+
+                            }
+
+                        }
+                        catch (Exception e){
+
+                            Log.d("errorVolley", "Inside exeption "+e.toString());
+                        }
+
+                        customDialog.endDialog();
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(RACActivity.this , "There is some error ", Toast.LENGTH_LONG).show();
+
+                customDialog.endDialog();
+
+
+            }
+        });
+
+// Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
+    }
+
     public void accessPdf(){
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -342,6 +482,7 @@ public class RACActivity extends AppCompatActivity {
             //textview1.setText((_n + 1) + "/" + total_pages);
         }
     }
+
 
 
 }

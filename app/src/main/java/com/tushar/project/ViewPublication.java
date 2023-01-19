@@ -3,10 +3,13 @@ package com.tushar.project;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -16,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tushar.project.databinding.ActivityViewPublicationBinding;
+
 
 import org.json.JSONObject;
 
@@ -37,15 +41,43 @@ public class ViewPublication extends AppCompatActivity {
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getApplication());
         requestQueue= Volley.newRequestQueue(getApplication());
         customDialog= new CustomDialog(this , "Fetching record ......");
-        enrollment_number=sharedPreferences.getString("enrollment_number"," ");
 
-        getPublicationDetails();
+
+        int type=sharedPreferences.getInt("type", 1) ;
+
+        if(type==2){
+            customDialog=new CustomDialog(this , "Loading, Please wait .... ");
+
+            Intent intent=getIntent();
+
+            String en=intent.getStringExtra("en");
+
+            getPublicationDetails(en);
+
+            binding.titletext.setText("View Publication");
+            binding.button4.setText("Back");
+            binding.button4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    finish();
+
+                }
+            });
+
+        }else{
+            String name=sharedPreferences.getString("name", " ");
+            binding.studentNmaeInput.setText(name);
+            enrollment_number=sharedPreferences.getString("enrollment_number"," ");
+            getPublicationDetails(enrollment_number);
+        }
+
 
 
 
     }
 
-    public void getPublicationDetails(){
+    public void getPublicationDetails(String enrollment_number){
 
         String url =getString(R.string.domain_url)+"publication?en="+enrollment_number;
         Log.d("errorVolley", url);
@@ -62,6 +94,7 @@ public class ViewPublication extends AppCompatActivity {
 
                             boolean success= myJsonObject.optBoolean("success");
                             JSONObject data =myJsonObject.optJSONObject("message");
+                            String document ;
 
                             if(success){
 
@@ -70,8 +103,24 @@ public class ViewPublication extends AppCompatActivity {
                                     binding.enrollmentInout.setText (data.optString("EN"));
                                     binding.journalInput.setText (data.optString("journal"));
                                     binding.dateofpublicatoinInput.setText(data.optString("dop"));
-                                    binding.typeSpinner.setPrompt( data.optString("type"));
-                                    data.optString("doc");
+                                    binding.typeSpinner.setText( data.optString("type"));
+                                    binding.enrollmentInout.setText(data.optString("en"));
+                                    binding.studentNmaeInput.setText(data.optString("name"));
+                                   document= data.optString("doc");
+
+                                   if(!document.equals("null") && document.length()>0){
+
+                                       binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                                           @Override
+                                           public void onClick(View view) {
+
+                                               Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(document));
+                                               startActivity(browserIntent);
+
+
+                                           }
+                                       });
+                                   }
 
                                 }
                             }
