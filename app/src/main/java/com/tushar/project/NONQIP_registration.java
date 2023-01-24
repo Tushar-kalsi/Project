@@ -35,6 +35,8 @@ import java.util.Map;
 
 public class NONQIP_registration extends AppCompatActivity {
 
+    String enrollment_number;
+
     SharedPreferences preferences ;
     private ActivityNonqipRegistrationBinding binding;
     CustomDialog dialog;
@@ -83,7 +85,8 @@ public class NONQIP_registration extends AppCompatActivity {
         }else {
             username = preferences.getString("username", " ");
             id = preferences.getInt("id", 1);
-
+            enrollment_number=preferences.getString("enrollment_number", " ");
+            binding.enrollmentInout.setText(enrollment_number);
 
 
             getQIP();

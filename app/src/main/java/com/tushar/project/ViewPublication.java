@@ -69,6 +69,8 @@ public class ViewPublication extends AppCompatActivity {
             String name=sharedPreferences.getString("name", " ");
             binding.studentNmaeInput.setText(name);
             enrollment_number=sharedPreferences.getString("enrollment_number"," ");
+            binding.enrollmentInout.setText(enrollment_number);
+            binding.button4.setVisibility(View.GONE);
             getPublicationDetails(enrollment_number);
         }
 

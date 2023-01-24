@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".QIP_registration">
 
 
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:id="@+id/drawable_box"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/login_drawable_box"
+        />
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40sp"
+        android:id="@+id/drawable_circle"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/login_drawable_circle"
+        />
+
+
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/titletext"
@@ -17,7 +48,7 @@
             android:text="Registration Form \nNON-QIP Students"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/drawable_box"
             android:textColor="@color/colorPrimary"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
@@ -350,4 +381,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

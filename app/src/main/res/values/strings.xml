@@ -17,11 +17,12 @@
 
     <string-array name="array_jornals">
         <item>Select Type</item>
-        <item>Academic/Scholarly </item>
-        <item>Trade </item>
-        <item>Current affairs/Opinion</item>
-        <item>Popular Magazines</item>
-        <item>Newspapers</item>
+        <item>SCI</item>
+        <item>Book Chapter</item>
+        <item>Conference Paper</item>
+        <item>Research Paper</item>
+        <item>Survey Paper</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="array_supervisor">

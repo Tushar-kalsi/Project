@@ -71,6 +71,7 @@ public class ThesisSubmission extends AppCompatActivity  implements AdapterView.
 
         int type=preferences.getInt("type", 1) ;
 
+
         if(type==2 || type ==3){
             customDialog=new CustomDialog(this , "Loading, Please wait .... ");
 
@@ -81,9 +82,14 @@ public class ThesisSubmission extends AppCompatActivity  implements AdapterView.
 
             binding.typeSpinner.setVisibility(View.GONE);
             binding.typeTextView.setVisibility(View.VISIBLE);
+
             makeApiCallToGet(en);
 
-
+            binding.studentNmaeInput.setEnabled(false);
+            binding.titleNameInput.setEnabled(false);
+            binding.enrollmentInout.setEnabled(false);
+            binding.journalInput.setEnabled(false);
+            binding.dateofpublicatoinInput.setEnabled(false);
 
             binding.titletext.setText("View Publication");
             binding.button4.setText("Back");

@@ -40,6 +40,8 @@ public class QIP_registration extends AppCompatActivity {
     RequestQueue requestQueue ;
     String username ;
     int id;
+    String enrollment_number;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,11 +88,13 @@ public class QIP_registration extends AppCompatActivity {
 
             username = preferences.getString("username", " ");
             id = preferences.getInt("id ", 1);
+            enrollment_number = preferences.getString("enrollment_number", " ");
 
 
             Log.d("errorVolley", username);
 
 
+            binding.enrollmentInout.setText(enrollment_number);
 
             getQIP();
 

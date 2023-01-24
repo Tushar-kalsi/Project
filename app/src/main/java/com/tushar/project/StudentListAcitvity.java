@@ -78,7 +78,14 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
         }else if(val_type==NONQIP_STUDENT){
 
             makeQIPApiCall(NONQIP_STUDENT);
-        }else if(val_type==RAC_STUDENT){
+        }
+        else if(val_type==7){
+
+
+            makeRacStudentCall();
+
+        }
+        else if(val_type==RAC_STUDENT){
 
 
             makeRacStudentCall();
@@ -277,10 +284,17 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
                                     studentModel.setEN(obj.optString("EN"));
                                     studentModel.setDOR(obj.optString("DOR"));
                                     studentModel.setBatch(obj.optString("Batch"));
-                                    studentModel.setSuperVisor("SuperVisor");
-                                    studentModel.setCoSuperVisor("CoSupervisor");
-                                    studentModel.setDocument("Document");
 
+
+                                    studentModel.setSuperVisor(obj.optString("SuperVisor"));
+                                    studentModel.setCoSuperVisor(obj.optString("CoSupervisor"));
+                                    studentModel.setDocument(obj.optString("Document"));
+
+                                    if(viewType==3 && val_type!=7 && !obj.optString("SuperVisor").equals("null")&& !obj.optString("CoSupervisor").equals("null")){
+
+                                        continue;
+
+                                    }
 
                                     dataList.add(studentModel);
 
@@ -288,8 +302,6 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
                                 }
 
                                 adapterRecyclerview.notifyDataSetChanged();
-
-
 
 
 
@@ -456,8 +468,18 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
 
             Intent intent=new Intent(this , RAC_HOD.class);
             intent.putExtra("en", studentModel.getEN());
+            intent.putExtra("ty", "2");
             Log.d("ianscvla", "inside this on "+studentModel.getEN());
             startActivity(intent);
+
+        }else if (val_type==7){
+
+            Intent intent=new Intent(this , RAC_HOD.class);
+            intent.putExtra("en", studentModel.getEN());
+            intent.putExtra("ty", "3");
+
+            startActivity(intent);
+
 
         }
 

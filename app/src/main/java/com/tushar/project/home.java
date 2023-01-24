@@ -12,23 +12,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.tushar.project.databinding.ActivityHomeBinding;
 
 public class home extends AppCompatActivity  implements RegistrationSelection , ThesisSelection{
 
     SharedPreferences preferences ;
-
     int id ;
 
     ActivityHomeBinding binding;
     RegistrationDialog registrationDialog;
     ThesisDialog thesisSelectionDialog ;
+
     int view;
+
     public static final int HOD_VIEW=3;
 
     public static final int TEACHER_VIEW=2;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +38,17 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
         preferences= PreferenceManager.getDefaultSharedPreferences(this);
         String name =preferences.getString("name", "");
         view =preferences.getInt("type", 1);
-        binding.salutationText.setText("Hi, "+name+" ji ");
+        binding.helloChampText.setText("Hello, "+name);
         registrationDialog = new RegistrationDialog(this, (RegistrationSelection) this);
 
+        binding.layoutDrawable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                logoutFunction();
+
+            }
+        });
         if(view==TEACHER_VIEW){
 
             performTeacherView();
@@ -120,13 +127,17 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
 
         }else{
 
-            if(view==TEACHER_VIEW || HOD_VIEW==3){
+            Log.d("type", view+" here ");
+            if(view==1){
+                startActivity(new Intent(this, NONQIP_registration.class));
+
+            }
+            else if(view==TEACHER_VIEW || HOD_VIEW==3){
+                Log.d("type", view+" here  inside student ");
                 Intent intent=new Intent(this ,StudentListAcitvity.class);
                 intent.putExtra("student" , 2);
                 startActivity(intent);
 
-            }else {
-                startActivity(new Intent(this, NONQIP_registration.class));
             }
 
         }
@@ -139,15 +150,25 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
         if(view==3){
 
             if(type==1){
+
+
+                Intent intent=new Intent(this , StudentListAcitvity.class );
+
+                intent.putExtra("student",7);
+
+                startActivity(intent);
+
+
+
+            }else{
+
+
                 Intent intent=new Intent(home.this, StudentListAcitvity.class);
                 intent.putExtra("student",3);
 
                 startActivity(intent);
 
 
-            }else{
-
-                startActivity(new Intent(this , RAC_HOD.class ));
 
             }
 
@@ -214,6 +235,9 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
             @Override
             public void onClick(View view) {
 
+                startActivity(new Intent(home.this , StatusActivity.class));
+
+
 
             }
         });
@@ -270,8 +294,8 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
 
     }
     public void performHodView(){
-        binding.vaerifyDocumentCard.setVisibility(View.VISIBLE);
 
+        binding.vaerifyDocumentCard.setVisibility(View.VISIBLE);
         Hod_RAC_dialog hod_rac_dialog=new Hod_RAC_dialog(this , (ThesisSelection) this);
 
         binding.statusCardView.setVisibility(View.VISIBLE);
@@ -279,6 +303,7 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
             @Override
             public void onClick(View view) {
 
+                startActivity(new Intent(home.this , StatusActivity.class));
 
             }
         });
@@ -286,6 +311,7 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
         binding.vaerifyDocumentCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 startActivity(new Intent(home.this , HOD_racVerifyActivity.class));
 
             }
@@ -300,7 +326,8 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
         });
 
         binding.statusCardView.setVisibility(View.VISIBLE);
-        binding.textStudentProfileText.setText("Student Profile");
+        binding.textStudentProfileText.setText("Student \nProfile");
+        binding.textStudentProfileText.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
         binding.registrationCard.setOnClickListener(new View.OnClickListener() {
             @Override

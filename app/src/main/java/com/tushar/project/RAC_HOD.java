@@ -40,6 +40,7 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
     private String selectedSuperVisior="", selectedCosuperVisor="";
     RequestQueue referenceQueue;
     ActivityRacHodBinding binding;
+    String ty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +54,59 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
         coSuperVisorStringArray=getResources().getStringArray(R.array.array_cosupervisor);
         Intent intent=getIntent();
         String en =intent.getStringExtra("en");
+       ty=intent.getStringExtra("ty");
+
+
         makeRacCall(en);
 
-        binding.coSuperVisorSpinnerTextview.setVisibility(View.GONE);
-        binding.superVisorTextView.setVisibility(View.GONE);
-        binding.coSuperVisorSpinner.setVisibility(View.VISIBLE);
-        binding.superVisorSpinner.setVisibility(View.VISIBLE);
+        if(ty.equals("2")){
+
+            binding.coSuperVisorSpinnerTextview.setVisibility(View.GONE);
+            binding.superVisorTextView.setVisibility(View.GONE);
+            binding.coSuperVisorSpinner.setVisibility(View.VISIBLE);
+            binding.superVisorSpinner.setVisibility(View.VISIBLE);
+
+
+            binding.button4.setText("Modify");
+            binding.button4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    updateSuperVisor(en);
+
+                }
+            });
+
+
+        }else{
+            binding.coSuperVisorSpinnerTextview.setVisibility(View.VISIBLE);
+            binding.superVisorTextView.setVisibility(View.VISIBLE);
+            binding.coSuperVisorSpinner.setVisibility(View.GONE);
+            binding.superVisorSpinner.setVisibility(View.GONE);
+
+
+            binding.button4.setText("Back");
+            binding.button4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    finish();
+
+
+                }
+            });
+
+
+        }
+
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, superVisorStringArray);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.superVisorSpinner.setAdapter(arrayAdapter);
+
+        binding.superVisorSpinner.setOnItemSelectedListener(this);
 
 
         ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, coSuperVisorStringArray);
@@ -71,21 +115,10 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
 
 
         binding.coSuperVisorSpinner.setOnItemSelectedListener(this);
-        binding.superVisorSpinner.setOnItemSelectedListener(this);
+
 
 
         binding.uploadButton.setText("View Document");
-
-        binding.button4.setText("Modify");
-        binding.button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                updateSuperVisor(en);
-
-            }
-        });
-
 
 
 
@@ -93,14 +126,16 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
 
     private void updateSuperVisor(String enNumnber){
 
-        String url =getString(R.string.domain_url)+"rac/modify?en="+enNumnber;
+        String url =getString(R.string.domain_url)+"rac/modify";
         Log.d("errorVolley", url);
         customDialog.startDialog();
 
 
         try {
 
+            Log.d("errorVolley",selectedSuperVisior+"  "+selectedCosuperVisor+" are selected data ");
             JSONObject jsonBody = new JSONObject();
+            jsonBody.put("enrollment_number", enNumnber);
             jsonBody.put("supervisor", selectedSuperVisior);
             jsonBody.put("cosupervisor", selectedCosuperVisor);
 
@@ -119,7 +154,7 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
                         JSONObject myJsonObject = new JSONObject(response);
 
                         boolean success= myJsonObject.optBoolean("success");
-                        String message =myJsonObject.optString("message ");
+                        String message =myJsonObject.optString("message");
                         if(success){
                             Toast.makeText(RAC_HOD.this , "Success: "+message, Toast.LENGTH_LONG).show();
                             finish();
@@ -205,24 +240,30 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        if(view.getId()==binding.superVisorSpinner.getId()){
+        if(adapterView.getId()==binding.superVisorSpinner.getId()){
 
             if(i==0){
+
                 selectedSuperVisior="";
+                Log.d("errorVolley", "supervisor none selected ");
 
             }else {
-                selectedSuperVisior=superVisorStringArray[i-1];
+                Log.d("errorVolley", "supervisor selected "+superVisorStringArray[i]);
+                selectedSuperVisior=superVisorStringArray[i];
 
             }
 
-        }else{
+        }else if(adapterView.getId()==binding.coSuperVisorSpinner.getId()){
+
 
             if(i==0){
                 selectedCosuperVisor="";
+                Log.d("errorVolley", "co-supervisor none selected ");
 
             }else {
 
-                selectedCosuperVisor=coSuperVisorStringArray[i-1];
+                Log.d("errorVolley", "co-supervisor selected "+superVisorStringArray[i]);
+                selectedCosuperVisor=coSuperVisorStringArray[i];
 
             }
 
@@ -270,6 +311,8 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
                                     String documentLink=jsonObject.optString("Document");
 
 
+                                    binding.coSuperVisorSpinnerTextview.setText(coSuperVisor);
+                                    binding.superVisorTextView.setText(supervisor);
 
                                     binding.dorinput.setText(jsonObject.optString("DOR"));
 
