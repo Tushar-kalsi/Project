@@ -102,7 +102,9 @@ public class HOD_racVerifyActivity extends AppCompatActivity implements HodClick
 
                                     JSONObject obj = data.getJSONObject(i);
 
-                                    if(!obj.optString("verify").equals("null") || obj.optString("verify").length()!=0){
+                                    Toast.makeText(HOD_racVerifyActivity.this, "Data of verify "+obj.optString("verify"), Toast.LENGTH_LONG).show();
+
+                                    if(obj.optString("verify").length()!=0 ){
 
                                         continue;
 
@@ -189,7 +191,10 @@ public class HOD_racVerifyActivity extends AppCompatActivity implements HodClick
 
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("enrollment_number", en);
-            jsonBody.put("cosupervisor", b);
+            if(b)
+                jsonBody.put("verify", 1);
+            else
+                jsonBody.put("verify", 2);
 
 
             final String requestBody = jsonBody.toString();

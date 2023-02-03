@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <ScrollView
         android:layout_width="match_parent"
+        android:background="@color/superlightGrey"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp">
 

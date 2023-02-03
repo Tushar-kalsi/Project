@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ScrollView
+        android:background="@color/superlightGrey"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".RAC_HOD">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:id="@+id/drawable_box"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/login_drawable_box"
+                />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="40sp"
+                android:id="@+id/drawable_circle"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/login_drawable_circle"
+                />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/titletext"
+                android:textSize="30dp"
+                android:text="Upload Documents"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/drawable_box"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_marginStart="20dp"
+                android:layout_height="63dp"
+                android:layout_width="0dp"
+                android:id="@+id/nameText"
+                app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="@+id/nameLayout"
+                app:layout_constraintBottom_toBottomOf="@id/nameLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Name"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_height="63dp"
+                android:layout_marginTop="100dp"
+                android:hint=" Name "
+                android:textColorHint="#A7A7A7"
+                app:boxStrokeColor="#EAEAEE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+                app:layout_constraintTop_toTopOf="@id/titletext">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+
+                    android:textColor="#5B5B5B"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_marginStart="20dp"
+                android:layout_height="63dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/enrollmentNumber"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toTopOf="@+id/enrollmentLayout"
+                app:layout_constraintBottom_toBottomOf="@id/enrollmentLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Enrollment number"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/enrollmentLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_height="63dp"
+
+                android:hint="Enrollment Number"
+                android:textColorHint="#A7A7A7"
+                app:boxStrokeColor="#EAEAEE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/enrollmentNumber"
+                app:layout_constraintTop_toBottomOf="@id/nameLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/enrollmentNumberInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+
+                    android:textColor="#5B5B5B"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/marksheetText"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:text="Marksheet"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/marksheetUploadButton"
+                app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/marksheetUploadButton" />
+
+            <Button
+                android:id="@+id/marksheetUploadButton"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:text="Upload"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/enrollmentLayout"
+
+                app:layout_constraintTop_toBottomOf="@id/enrollmentLayout" />
+
+            <TextView
+                android:id="@+id/rdcLetterText"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:text="RDC Letter"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/rdcLetterUploadButton"
+                app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rdcLetterUploadButton" />
+
+            <Button
+                android:id="@+id/rdcLetterUploadButton"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:text="Upload"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/enrollmentLayout"
+                app:layout_constraintTop_toBottomOf="@id/marksheetUploadButton" />
+
+            <TextView
+                android:id="@+id/predefenceText"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:text="Pre-Defence Offer \nLetter"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/PreDefenceLetterUplaodButton"
+                app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/PreDefenceLetterUplaodButton" />
+
+            <Button
+                android:id="@+id/PreDefenceLetterUplaodButton"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:text="Upload"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/enrollmentLayout"
+
+                app:layout_constraintTop_toBottomOf="@id/rdcLetterText" />
+
+
+            <TextView
+                android:id="@+id/thesisSubmittedLettertext"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:text="Thesis Submission \nLetter"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/thesisSubmittedLetterUploadButton"
+                app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/thesisSubmittedLetterUploadButton" />
+
+            <Button
+                android:id="@+id/thesisSubmittedLetterUploadButton"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:text="Upload"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/enrollmentLayout"
+
+                app:layout_constraintTop_toBottomOf="@id/PreDefenceLetterUplaodButton" />
+
+
+
+            <TextView
+                android:id="@+id/thesisAwardedText"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:text="Thesis Awarded "
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/thesisAwardedUploadButton"
+                app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/thesisAwardedUploadButton" />
+
+            <Button
+                android:id="@+id/thesisAwardedUploadButton"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:text="Upload"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/enrollmentLayout"
+
+                app:layout_constraintTop_toBottomOf="@id/thesisSubmittedLetterUploadButton" />
+
+
+            <TextView
+                android:id="@+id/synopsisText"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:text="Synopsis"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/synopsisAwardedButton"
+                app:layout_constraintEnd_toEndOf="@+id/enrollmentNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/synopsisAwardedButton" />
+
+            <Button
+                android:id="@+id/synopsisAwardedButton"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="63dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:text="Upload"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/enrollmentLayout"
+                app:layout_constraintTop_toBottomOf="@id/thesisAwardedUploadButton" />
+
+
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="271dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="10dp"
+                android:text="Submit"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/synopsisAwardedButton" />
+
+
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

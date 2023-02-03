@@ -37,7 +37,7 @@ public class StatusActivity extends AppCompatActivity {
         dialog=new CustomDialog(this , "Fetching data ........");
         dataList=new ArrayList<>();
         requestQueue= Volley.newRequestQueue(this);
-        adapter=new StatusRecyclerViewAdapter(dataList);
+        adapter=new StatusRecyclerViewAdapter(dataList, this);
 
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -79,6 +79,15 @@ public class StatusActivity extends AppCompatActivity {
                                     statusModel.setRac(obj.optInt("rac"));
                                     statusModel.setEnrollment_number(obj.optString("EN"));
                                     statusModel.setName(obj.optString("name"));
+                                    statusModel.setRdc(obj.optInt("rdc"));
+                                    statusModel.setMarksheet(obj.optInt("marksheet"));
+                                    statusModel.setPredefenceLetter(obj.optInt("pdl"));
+                                    statusModel.setThesisSubmission(obj.optInt("thesissub"));
+                                    statusModel.setThesisAwarded(obj.optInt("thesisawa"));
+                                    statusModel.setSynopsis(obj.optInt("synopsis"));
+                                    statusModel.setTitle(obj.optInt("title"));
+
+
 
 
 

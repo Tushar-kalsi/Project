@@ -111,23 +111,7 @@ public class CourseWork extends AppCompatActivity {
             String name =preferences.getString("name","");
             binding.nameInput.setText(name);
             getAllCourseWork();
-            binding.uploadButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.d("errorVolley", "clicked ");
 
-
-                    if(attempt<4) {
-                        Toast.makeText(CourseWork.this, "You can only Upload document on " + (4 - attempt) + " complete Course work registration ", Toast.LENGTH_LONG).show();
-                    }else{
-
-                        accessPdf();
-
-
-                    }
-
-                }
-            });
 
             binding.button4.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -264,6 +248,25 @@ public class CourseWork extends AppCompatActivity {
 
                                 }
 
+                                binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Log.d("errorVolley", "clicked ");
+
+
+                                        if(attempt<4) {
+                                            Toast.makeText(CourseWork.this, "You can only Upload document on " + (4 - attempt) + " complete Course work registration ", Toast.LENGTH_LONG).show();
+                                        }else{
+
+                                            accessPdf();
+
+
+                                        }
+
+                                    }
+                                });
+
+
                             }
 
                         }
@@ -334,7 +337,6 @@ public class CourseWork extends AppCompatActivity {
                 return;
             }
             StorageReference riversRef = storageRef.child("coursework/"+enrollment_number+".pdf");
-
 
             riversRef.putFile(pdfUri).continueWithTask(new Continuation() {
                 @Override

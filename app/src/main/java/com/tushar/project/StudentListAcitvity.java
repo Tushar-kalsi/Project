@@ -36,6 +36,7 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
     public static final int COURSE_WORK=4;
     public static final int PUBLICARION=5;
     public static final int HODVIEW=3;
+    public static final int VIEWDOCUMENTS=8;
 
 
     CustomDialog dialog;
@@ -98,7 +99,93 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
 
             makePublicationCall();
 
+        }else if (val_type==VIEWDOCUMENTS){
+
+            makeApiCallForViewDocuments();
+
         }
+
+
+
+    }
+
+    public void makeApiCallForViewDocuments(){
+
+
+
+        String url=getString(R.string.domain_url)+"upload";
+
+        dialog.startDialog();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject myJsonObject = new JSONObject(response);
+
+                            boolean success= myJsonObject.optBoolean("success");
+                            JSONArray  data =myJsonObject.optJSONArray("results1");
+
+                            if(success && data!=null){
+
+                                for(int i =0;i< data.length();i++){
+
+
+                                    JSONObject obj=data.getJSONObject(i) ;
+                                    Log.d("errorVolley", "data "+obj.toString());
+
+                                    StudentModel studentModel=new StudentModel();
+                                    studentModel.setType(StudentModel.COURSEWORK);
+                                    studentModel.setEN(obj.optString("EN"));
+                                    studentModel.setFirstName(obj.optString("name"));
+                                    studentModel.setMarksheetUrl(obj.optString("marksheet"));
+                                    studentModel.setRdcUrl(obj.optString("rdc"));
+                                    studentModel.setPdlUrl(obj.optString("pdl"));
+                                    studentModel.setThesisawa(obj.optString("thesisawa"));
+                                    studentModel.setThesisub(obj.optString("thesisub"));
+                                    studentModel.setSynopsis(obj.optString("synopsis"));
+                                    studentModel.setTitle(obj.optString("title"));
+
+
+
+                                    dataList.add(studentModel);
+
+
+                                }
+
+                                adapterRecyclerview.notifyDataSetChanged();
+
+
+                            }
+
+                        }
+                        catch (Exception e){
+
+
+                        }
+
+                        dialog.endDialog();
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("errorVolley", error.toString().trim());
+                Toast.makeText(StudentListAcitvity.this , "There is some error ", Toast.LENGTH_LONG).show();
+
+                dialog.endDialog();
+
+
+            }
+        });
+
+// Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
+
 
 
 
@@ -480,6 +567,12 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
 
             startActivity(intent);
 
+
+        }
+
+        else if (val_type==VIEWDOCUMENTS){
+
+            Intent intent=new Intent(this , StudentDocumentUplaod.class);
 
         }
 

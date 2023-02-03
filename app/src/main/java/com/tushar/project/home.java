@@ -33,7 +33,6 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         binding= DataBindingUtil.setContentView(this , R.layout.activity_home);
         preferences= PreferenceManager.getDefaultSharedPreferences(this);
         String name =preferences.getString("name", "");
@@ -66,6 +65,20 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
 
             id = preferences.getInt("id", 1);
 
+            binding.titleSubmission.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(home.this , TitleSubmission.class));
+
+                }
+            });
+
+            binding.documentUpload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(home.this , StudentDocumentUplaod.class));
+                }
+            });
             binding.courseWorkCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -222,14 +235,13 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
 
         preferences.edit().putBoolean("logged", false).apply();
         startActivity(new Intent(this , MainActivity.class));
-
         finish();
-
 
     }
 
     private void performTeacherView(){
-
+        binding.documentUpload.setVisibility(View.GONE);
+        binding.titleSubmission.setVisibility(View.GONE);
 
         binding.statusCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -241,7 +253,19 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
 
             }
         });
+
         binding.statusCardView.setVisibility(View.VISIBLE);
+
+        binding.statusCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(home.this , StatusActivity.class));
+
+            }
+        });
+
+
         binding.textStudentProfileText.setText("Student Profile");
 
         binding.registrationCard.setOnClickListener(new View.OnClickListener() {
@@ -295,6 +319,21 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
     }
     public void performHodView(){
 
+        binding.ViewDocumentsCardView.setVisibility(View.VISIBLE);
+        binding.ViewDocumentsCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(home.this , StudentListAcitvity.class);
+                intent.putExtra("student",StudentListAcitvity.VIEWDOCUMENTS );
+
+                startActivity(intent);
+
+            }
+        });
+        binding.documentUpload.setVisibility(View.GONE);
+        binding.titleSubmission.setVisibility(View.GONE);
+
+
         binding.vaerifyDocumentCard.setVisibility(View.VISIBLE);
         Hod_RAC_dialog hod_rac_dialog=new Hod_RAC_dialog(this , (ThesisSelection) this);
 
@@ -325,7 +364,6 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
             }
         });
 
-        binding.statusCardView.setVisibility(View.VISIBLE);
         binding.textStudentProfileText.setText("Student \nProfile");
         binding.textStudentProfileText.setGravity(View.TEXT_ALIGNMENT_CENTER);
 

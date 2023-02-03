@@ -42,8 +42,10 @@ public class CustomDialog {
         dialog = builder.create();
         dialog.show();
     }
-    public void endDialog(){
-        dialog.dismiss();
+    public void endDialog() {
+
+        if(dialog.isShowing())
+            dialog.dismiss();
     }
 
 }

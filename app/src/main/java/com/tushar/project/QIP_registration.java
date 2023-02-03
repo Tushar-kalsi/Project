@@ -56,7 +56,6 @@ public class QIP_registration extends AppCompatActivity {
         dialog = new CustomDialog(this, "Saving data .....");
         requestQueue = Volley.newRequestQueue(this);
 
-
         preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         int type =preferences.getInt("type", 1);

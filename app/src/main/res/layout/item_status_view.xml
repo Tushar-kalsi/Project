@@ -192,8 +192,184 @@
 
 
 
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_height="63dp"
+        android:layout_width="0dp"
+        android:id="@+id/marksheetTextView"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/enrollmentNumber"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/marksheetButton"
+        app:layout_constraintBottom_toBottomOf="@id/marksheetButton"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Marksheet"
+        />
 
 
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/marksheetButton"
+        android:layout_marginEnd="20dp"
+        android:text="Pending "
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintStart_toEndOf="@+id/dateOfRegistration"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/ThesisSubmissionButton"
+
+        />
+
+
+    <TextView
+        android:id="@+id/rdcLettertextView"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:text="RDC letter"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/rdcButton"
+        app:layout_constraintEnd_toEndOf="@+id/marksheetTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rdcButton" />
+
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/rdcButton"
+        android:layout_marginEnd="20dp"
+        android:text="Pending "
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintStart_toEndOf="@+id/dateOfRegistration"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/marksheetButton"
+
+        />
+
+    <TextView
+        android:id="@+id/predefenceText"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:text="Pre Defence \nletter"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/PreDefenceLetterUplaodButton"
+        app:layout_constraintEnd_toEndOf="@+id/marksheetTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/PreDefenceLetterUplaodButton" />
+
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/PreDefenceLetterUplaodButton"
+        android:layout_marginEnd="20dp"
+        android:text="Pending "
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintStart_toEndOf="@+id/dateOfRegistration"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/rdcButton"
+
+        />
+
+    <TextView
+        android:id="@+id/thesisSubmissionText"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:text="Thesis Submission"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/thesisSubmissionButton"
+        app:layout_constraintEnd_toEndOf="@+id/marksheetTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/thesisSubmissionButton" />
+
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/thesisSubmissionButton"
+        android:layout_marginEnd="20dp"
+        android:text="Pending "
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintStart_toEndOf="@+id/dateOfRegistration"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/PreDefenceLetterUplaodButton"
+
+        />
+
+
+
+    <TextView
+        android:id="@+id/thesisAwardedtextView"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:text="Thesis Awarded"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/thesisAwardedButton"
+        app:layout_constraintEnd_toEndOf="@+id/marksheetTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/thesisAwardedButton" />
+
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/thesisAwardedButton"
+        android:layout_marginEnd="20dp"
+        android:text="Pending "
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintStart_toEndOf="@+id/dateOfRegistration"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/thesisSubmissionButton"
+
+        />
+
+
+    <TextView
+        android:id="@+id/synopsisTextView"
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:text="Thesis Awarded"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/synopsisButton"
+        app:layout_constraintEnd_toEndOf="@+id/marksheetTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/synopsisButton" />
+
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="63dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/synopsisButton"
+        android:layout_marginEnd="20dp"
+        android:text="Pending "
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintStart_toEndOf="@+id/dateOfRegistration"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/thesisAwardedButton"
+
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:background="@color/superlightGrey"
         android:layout_height="match_parent"
+
         tools:context=".home">
 
 
 <androidx.constraintlayout.widget.ConstraintLayout
+
+    android:paddingBottom="50sp"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,7 +32,7 @@
         />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Hello Champ!"
         android:lineHeight="30sp"
@@ -62,12 +67,15 @@
         app:layout_constraintStart_toStartOf="@id/layout_drawable"
         app:layout_constraintEnd_toEndOf="@id/layout_drawable"
         android:text="Logout"
+        android:id="@+id/logout_text"
         app:layout_constraintTop_toBottomOf="@+id/layout_drawable"
         android:fontFamily="@font/montserrat_semibold"
         android:layout_marginTop="5sp"
         />
     <TextView
-        android:layout_width="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/logout_text"
+        android:layout_width="0dp"
+        android:layout_marginEnd="10sp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/helloChampText"
         app:layout_constraintTop_toBottomOf="@id/helloChampText"
@@ -306,6 +314,177 @@
 
     </androidx.cardview.widget.CardView>
 
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="7dp"
+        app:cardBackgroundColor="@color/white"
+        android:id="@+id/documentUpload"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1.0"
+        android:elevation="5dp"
+        app:layout_constraintStart_toStartOf="@id/RAC_upload"
+        app:layout_constraintStart_toEndOf="@id/RAC_upload"
+        app:layout_constraintEnd_toEndOf="@id/RAC_upload"
+        app:layout_constraintTop_toBottomOf="@id/RAC_upload"
+
+        >
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/file"
+                android:id="@+id/image7"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Doc. Upload"
+                app:layout_constraintStart_toStartOf="@id/image7"
+                app:layout_constraintEnd_toEndOf="@id/image7"
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintTop_toBottomOf="@+id/image7"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        app:cardCornerRadius="7dp"
+        app:cardBackgroundColor="@color/white"
+        android:id="@+id/ViewDocumentsCardView"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1.0"
+        android:elevation="5dp"
+        app:layout_constraintStart_toStartOf="@id/RAC_upload"
+        app:layout_constraintStart_toEndOf="@id/RAC_upload"
+        app:layout_constraintEnd_toEndOf="@id/RAC_upload"
+        app:layout_constraintTop_toBottomOf="@id/RAC_upload"
+
+        >
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/file"
+                android:id="@+id/image9"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="View Doc. "
+                app:layout_constraintStart_toStartOf="@id/image9"
+                app:layout_constraintEnd_toEndOf="@id/image9"
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintTop_toBottomOf="@+id/image9"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="7dp"
+        app:cardBackgroundColor="#7F3BA8BE"
+        android:id="@+id/titleSubmission"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1.0"
+        android:elevation="5dp"
+        app:layout_constraintStart_toStartOf="@id/courseWorkCardView"
+        app:layout_constraintStart_toEndOf="@id/courseWorkCardView"
+        app:layout_constraintEnd_toEndOf="@id/courseWorkCardView"
+        app:layout_constraintTop_toBottomOf="@id/courseWorkCardView"
+
+        >
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/title"
+                android:id="@+id/imnage8"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="Title \nSubmission"
+
+                app:layout_constraintStart_toStartOf="@id/imnage8"
+                app:layout_constraintEnd_toEndOf="@id/imnage8"
+                android:layout_marginTop="5dp"
+
+                app:layout_constraintTop_toBottomOf="@+id/imnage8"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="200dp"
@@ -319,7 +498,7 @@
         app:layout_constraintStart_toStartOf="@id/registrationCard"
         app:layout_constraintStart_toEndOf="@id/registrationCard"
         app:layout_constraintEnd_toEndOf="@id/registrationCard"
-        app:layout_constraintTop_toBottomOf="@id/RAC_upload"
+        app:layout_constraintTop_toBottomOf="@id/ViewDocumentsCardView"
 
         >
 
@@ -347,7 +526,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textSize="25dp"
                 android:textStyle="bold"
-
                 android:textColor="@color/black"
                 android:text="Verify Doc."
                 app:layout_constraintStart_toStartOf="@id/checked"
@@ -401,8 +579,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:text="Student Status"

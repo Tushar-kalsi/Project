@@ -8,12 +8,61 @@ public class StudentModel {
     public static final int PUBLICARION=5;
 
 
-
+    String marksheetUrl , rdcUrl , pdlUrl ,thesisub, thesisawa, synopsis;
     private int type;
     private String journal;
     private String dop;
     private String journal_type;
     private String title;
+
+
+    public String getMarksheetUrl() {
+        return marksheetUrl;
+    }
+
+    public void setMarksheetUrl(String marksheetUrl) {
+        this.marksheetUrl = marksheetUrl;
+    }
+
+    public String getRdcUrl() {
+        return rdcUrl;
+    }
+
+    public void setRdcUrl(String rdcUrl) {
+        this.rdcUrl = rdcUrl;
+    }
+
+    public String getPdlUrl() {
+        return pdlUrl;
+    }
+
+    public void setPdlUrl(String pdlUrl) {
+        this.pdlUrl = pdlUrl;
+    }
+
+    public String getThesisub() {
+        return thesisub;
+    }
+
+    public void setThesisub(String thesisub) {
+        this.thesisub = thesisub;
+    }
+
+    public String getThesisawa() {
+        return thesisawa;
+    }
+
+    public void setThesisawa(String thesisawa) {
+        this.thesisawa = thesisawa;
+    }
+
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
 
     public String getJournal() {
         return journal;

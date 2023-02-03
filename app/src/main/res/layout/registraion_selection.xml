@@ -8,6 +8,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/superlightGrey"
     android:layout_width="wrap_content"
     android:elevation="5dp"
     android:layout_marginStart="40dp"
