@@ -6,14 +6,14 @@ public class StatusModel {
     String type;
     String username;
     String enrollment_number;
-    int coursework, publication, rac, title , marksheet ,rdc , predefenceLetter , thesisSubmission, thesisAwarded , synopsis;
+    int coursework, publication, rac , marksheet ,rdc , predefenceLetter , thesisSubmission, thesisAwarded , synopsis;
+    String title;
 
-
-    public int getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(int title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 

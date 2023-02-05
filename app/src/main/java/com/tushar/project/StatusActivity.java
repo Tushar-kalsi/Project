@@ -85,10 +85,7 @@ public class StatusActivity extends AppCompatActivity {
                                     statusModel.setThesisSubmission(obj.optInt("thesissub"));
                                     statusModel.setThesisAwarded(obj.optInt("thesisawa"));
                                     statusModel.setSynopsis(obj.optInt("synopsis"));
-                                    statusModel.setTitle(obj.optInt("title"));
-
-
-
+                                    statusModel.setTitle(obj.optString("title"));
 
 
                                     dataList.add(statusModel);

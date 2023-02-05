@@ -243,6 +243,18 @@ public class home extends AppCompatActivity  implements RegistrationSelection , 
         binding.documentUpload.setVisibility(View.GONE);
         binding.titleSubmission.setVisibility(View.GONE);
 
+        binding.ViewDocumentsCardView.setVisibility(View.VISIBLE);
+
+        binding.ViewDocumentsCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(home.this , StudentListAcitvity.class);
+                intent.putExtra("student",StudentListAcitvity.VIEWDOCUMENTS );
+
+                startActivity(intent);
+
+            }
+        });
         binding.statusCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -2,6 +2,7 @@ package com.tushar.project;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.tushar.project.databinding.ItemStatusViewBinding;
 
 import java.util.List;
+import java.util.function.LongFunction;
 
 
 public class StatusRecyclerViewAdapter extends RecyclerView.Adapter<StatusViewHolder> {
@@ -37,6 +39,7 @@ public class StatusRecyclerViewAdapter extends RecyclerView.Adapter<StatusViewHo
     public void onBindViewHolder(@NonNull StatusViewHolder holder, int position) {
 
         StatusModel statusModel=data.get(position);
+
         if(statusModel.getCoursework()>=4){
             holder.binding.courseworkPendingButton.setText("Completed");
             holder.binding.courseworkPendingButton.setBackgroundColor(Color.GREEN);
@@ -144,7 +147,9 @@ public class StatusRecyclerViewAdapter extends RecyclerView.Adapter<StatusViewHo
         }
         holder.binding.nameInput.setText(statusModel.getName());
         holder.binding.enrollmentNumberInput.setText(statusModel.getEnrollment_number());
+        Log.d("valueTu", statusModel.getTitle() +" akcx ");
 
+        holder.binding.titleInput.setText(statusModel.getTitle()+" ");
     }
 
     @Override

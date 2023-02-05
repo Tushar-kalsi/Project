@@ -113,7 +113,7 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
 
 
 
-        String url=getString(R.string.domain_url)+"upload";
+        String url=getString(R.string.domain_url)+"upload?param=all";
 
         dialog.startDialog();
 
@@ -143,6 +143,7 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
                                     studentModel.setFirstName(obj.optString("name"));
                                     studentModel.setMarksheetUrl(obj.optString("marksheet"));
                                     studentModel.setRdcUrl(obj.optString("rdc"));
+                                    studentModel.setLastName(" ");
                                     studentModel.setPdlUrl(obj.optString("pdl"));
                                     studentModel.setThesisawa(obj.optString("thesisawa"));
                                     studentModel.setThesisub(obj.optString("thesisub"));
@@ -573,6 +574,11 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
         else if (val_type==VIEWDOCUMENTS){
 
             Intent intent=new Intent(this , StudentDocumentUplaod.class);
+
+            intent.putExtra("type", 2);
+            intent.putExtra("en", studentModel.getEN());
+
+            startActivity(intent);
 
         }
 

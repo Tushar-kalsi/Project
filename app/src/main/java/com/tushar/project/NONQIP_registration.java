@@ -224,7 +224,7 @@ public class NONQIP_registration extends AppCompatActivity {
 
 
 
-        String URL=getString(R.string.domain_url)+"qip";
+        String URL=getString(R.string.domain_url)+"nonqip";
         try {
 
             JSONObject jsonBody = new JSONObject();

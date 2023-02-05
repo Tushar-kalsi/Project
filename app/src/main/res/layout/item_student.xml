@@ -13,6 +13,7 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:layout_marginEnd="20sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Name :"
@@ -26,15 +27,17 @@
         />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="En No:"
         android:id="@+id/enrollementNumberText"
-        app:layout_constraintTop_toBottomOf="@+id/titleNameText"
-        android:textSize="20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20sp"
+        android:text="En No:"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/viewMoreButton"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/titleNameText" />
 
     <Button
         android:layout_width="wrap_content"

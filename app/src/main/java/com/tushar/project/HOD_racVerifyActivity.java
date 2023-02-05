@@ -102,10 +102,9 @@ public class HOD_racVerifyActivity extends AppCompatActivity implements HodClick
 
                                     JSONObject obj = data.getJSONObject(i);
 
-                                    Toast.makeText(HOD_racVerifyActivity.this, "Data of verify "+obj.optString("verify"), Toast.LENGTH_LONG).show();
 
-                                    if(obj.optString("verify").length()!=0 ){
-
+                                    Log.d("opitng", obj.optInt("verify")+" "+obj.optString("name") +" adsc " );
+                                    if(obj.optInt("verify")==1 ||  obj.optInt("verify")==2 ){
                                         continue;
 
                                     }

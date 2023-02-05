@@ -20,7 +20,16 @@ public class CustomDialog {
         this.text=text;
 
     }
+    public static CustomDialog instance;
 
+    public static CustomDialog getInstance(Activity activity, String text){
+        if(instance==null){
+            return new CustomDialog(activity, text);
+
+        }
+
+        return instance;
+    }
     public void changeText(String text){
         this.text=text;
 
@@ -30,6 +39,11 @@ public class CustomDialog {
         }
     }
     public void startDialog(){
+
+        if(dialog!=null && dialog.isShowing()){
+            return ;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
         View view=inflater.inflate(R.layout.custom_dialog,null);

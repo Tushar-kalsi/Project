@@ -31,6 +31,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -69,10 +70,9 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
     RequestQueue requestQueue;
     CustomDialog customDialog;
     Uri marksheetUri , theisSubmitted , synopsisUri , thesisAwardedUri , rdcUploadUri,preDefenceLetter;
-
     List<Integer> selectedFiles;
     StorageReference storageRef;
-    FirestoreUploader firestoreUploader;
+    int viewType;
 
 
     @Override
@@ -80,20 +80,19 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this , R.layout.activity_student_document_uplaod);
 
-        customDialog=new CustomDialog(this, "Uploading Files");
+        customDialog=CustomDialog.getInstance(this , "Upload , Please Wait .... ");
 
         requestQueue= Volley.newRequestQueue(this);
 
-
         Intent intent=getIntent();
 
-        int viewType =intent.getIntExtra("type", 1);
+       viewType=intent.getIntExtra("type", 1);
 
         if(viewType==1) {
             selectedFiles = new ArrayList<>();
             FirebaseStorage storage = FirebaseStorage.getInstance("gs://project-44332.appspot.com");
             storageRef = storage.getReference();
-            firestoreUploader = new FirestoreUploader(storageRef);
+
             completedUpload = new ArrayList<>();
             preferences = PreferenceManager.getDefaultSharedPreferences(this);
             name = preferences.getString("name", "");
@@ -107,20 +106,29 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
             binding.enrollmentNumberInput.setText(enrollment_number);
             binding.nameInput.setText(name);
 
+
+
+            binding.button4.setOnClickListener(this);
+
+            makeApiCall(enrollment_number);
+
         }else{
+
             String enrollment_number= intent.getStringExtra("en");
 
             makeApiCall(enrollment_number);
+            binding.button4.setVisibility(View.GONE);
+
 
 
 
         }
     }
 
+
     public void makeApiCall(String enrollment_number){
 
         String url = getString(R.string.domain_url) + "upload?param="+enrollment_number;
-
 
         customDialog.startDialog();
 
@@ -138,42 +146,68 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
 
                             if (success && data != null) {
 
-                                for (int i = 0; i < data.length(); i++) {
 
-                                    JSONObject obj = data.getJSONObject(i);
-                                    StudentModel statusModel=new StudentModel();
+                                    if(viewType==1 && data.length()>0 ){
+
+                                        binding.marksheetUploadButton.setText("Completed");
+                                        binding.marksheetUploadButton.setBackgroundColor(Color.GREEN);
+
+                                        binding.thesisAwardedUploadButton.setText("Completed");
+                                        binding.thesisAwardedUploadButton.setBackgroundColor(Color.GREEN);
+
+
+
+                                        binding.thesisSubmittedLetterUploadButton.setText("Completed");
+                                        binding.thesisSubmittedLetterUploadButton.setBackgroundColor(Color.GREEN);
+
+
+                                        binding.PreDefenceLetterUplaodButton.setText("Completed");
+                                        binding.PreDefenceLetterUplaodButton.setBackgroundColor(Color.GREEN);
+
+
+                                        binding.synopsisAwardedButton.setText("Completed");
+                                        binding.synopsisAwardedButton.setBackgroundColor(Color.GREEN);
+
+
+                                        binding.rdcLetterUploadButton.setText("Completed");
+                                        binding.rdcLetterUploadButton.setBackgroundColor(Color.GREEN);
+
+                                        binding.button4.setVisibility(View.GONE);
+
+                                    } else {
+
+                                        for (int i = 0; i < data.length(); i++) {
+
+                                            JSONObject obj = data.getJSONObject(i);
+                                            StudentModel statusModel = new StudentModel();
 
 //                                    statusModel.setCoursework(obj.optInt("coursework"));
 //                                    statusModel.setPublication(obj.optInt("publication"));
 //                                    statusModel.setRac(obj.optInt("rac"));
-                                    statusModel.setEN(obj.optString("EN"));
-                                    statusModel.setFullName(obj.optString("name"));
-                                    statusModel.setRdcUrl(obj.optString("rdc"));
-                                    statusModel.setMarksheetUrl(obj.optString("marksheet"));
-                                    statusModel.setPdlUrl(obj.optString("pdl"));
-                                    statusModel.setThesisub(obj.optString("thesissub"));
-                                    statusModel.setThesisawa(obj.optString("thesisawa"));
-                                    statusModel.setSynopsis(obj.optString("synopsis"));
-                                    statusModel.setTitle(obj.optString("title"));
+                                            statusModel.setEN(obj.optString("EN"));
+                                            statusModel.setFullName(obj.optString("name"));
+                                            statusModel.setRdcUrl(obj.optString("rdc"));
+                                            statusModel.setMarksheetUrl(obj.optString("marksheet"));
+                                            statusModel.setPdlUrl(obj.optString("pdl"));
+                                            statusModel.setThesisub(obj.optString("thesisub"));
+                                            statusModel.setThesisawa(obj.optString("thesisawa"));
+                                            statusModel.setSynopsis(obj.optString("synopsis"));
+                                            statusModel.setTitle(obj.optString("title"));
 
-                                    setDatainUi(statusModel);
-
-
+                                            setDatainUi(statusModel);
 
 
+                                        }
 
 
-                                }
-
-
-
-
+                                    }
                             }
 
                         } catch (Exception e) {
 
 
                         }
+
 
                         customDialog.endDialog();
 
@@ -198,50 +232,100 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
     }
     public void setDatainUi(StudentModel studentModel){
 
+        binding.titletext.setText("Document Detials");
         binding.enrollmentNumberInput.setText(studentModel.getEN());
         binding.nameInput.setText(studentModel.getFullName());
-        binding.thesisSubmittedLettertext.setOnClickListener(new View.OnClickListener() {
+
+        binding.PreDefenceLetterUplaodButton.setText("View Doc.");
+        binding.PreDefenceLetterUplaodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            try{
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(studentModel.getPdlUrl()));
+                startActivity(browserIntent);
+
+            }catch (Exception e){
+                Toast.makeText(StudentDocumentUplaod.this , "Invalid document ", Toast.LENGTH_LONG).show();
+
+            }
+            }
+        });
+        binding.thesisSubmittedLetterUploadButton.setText("View Doc.");
+        binding.thesisSubmittedLetterUploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(studentModel.getThesisub()));
-                startActivity(browserIntent);
+                try {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(studentModel.getThesisub()));
+                    startActivity(browserIntent);
+                }catch (Exception e){
+                    Toast.makeText(StudentDocumentUplaod.this , "Invalid document ", Toast.LENGTH_LONG).show();
+
+                }
             }
         });
 
+        binding.thesisAwardedUploadButton.setText("View Doc.");
         binding.thesisAwardedUploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+            try{
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(studentModel.getThesisawa()));
                 startActivity(browserIntent);
+
+            }catch (Exception e){
+                Toast.makeText(StudentDocumentUplaod.this , "Invalid document ", Toast.LENGTH_LONG).show();
+
+            }
             }
         });
 
+        binding.rdcLetterUploadButton.setText("View Doc.");
         binding.rdcLetterUploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+            try{
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(studentModel.getRdcUrl()));
                 startActivity(browserIntent);
+
+            }catch (Exception e){
+                Toast.makeText(StudentDocumentUplaod.this , "Invalid document ", Toast.LENGTH_LONG).show();
+
+            }
+
             }
         });
 
+        binding.synopsisAwardedButton.setText("View Doc.");
         binding.synopsisAwardedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                try{
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(studentModel.getSynopsis()));
                 startActivity(browserIntent);
+
+            }catch (Exception e){
+                Toast.makeText(StudentDocumentUplaod.this , "Invalid document ", Toast.LENGTH_LONG).show();
+
+            }
+
             }
         });
 
+        binding.marksheetUploadButton.setText("View Doc.");
         binding.marksheetUploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(studentModel.getMarksheetUrl()));
-                startActivity(browserIntent);
+                try{
+
+
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(studentModel.getMarksheetUrl()));
+                    startActivity(browserIntent);
+                }
+                catch (Exception e){
+                    Toast.makeText(StudentDocumentUplaod.this, "Invalid Link", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -401,7 +485,7 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
         String type="";
 
 
-        if(selectedFiles.size()<5){
+        if(selectedFiles.size()<6){
             Toast.makeText(this , "Please select all files", Toast.LENGTH_LONG ).show();
 
             return ;
@@ -417,18 +501,29 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
             else if(i==THESISSUBMITTED){
                 type="submitted";
             }else if(i==SYNOPSIS){
-
                 type="synopsis";
             }else if (i==RDCUPLOAD){
                 type="rdcupload";
+            }else if (i==PREDEFENCE_LETTER){
+                type="predefence";
+
             }
 
-            firestoreUploader.uploadFile(marksheetUri, enrollment_number, type).addOnSuccessListener(new OnSuccessListener() {
+
+            StorageReference riversRef = storageRef.child("uploads/"+type+"/"+enrollment_number+".pdf");
+
+
+           riversRef.putFile(marksheetUri).continueWithTask(new Continuation() {
                 @Override
-                public void onSuccess(Object o) {
-
-                    Task<Uri> task = (Task<Uri>)o;
-
+                public Object then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return riversRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         // After uploading is done it progress
                         // dialog box will be dismissed
@@ -470,26 +565,26 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
 
                             hashMap.put(RDCUPLOAD, myurl);
 
+                        }else if (i==PREDEFENCE_LETTER){
+
+
+                            binding.PreDefenceLetterUplaodButton.setText("Completed");
+                            binding.PreDefenceLetterUplaodButton.setBackgroundColor(Color.GREEN);
+
+                            hashMap.put(PREDEFENCE_LETTER, myurl);
                         }
 
-                        if(hashMap.size()==5){
+                        if(hashMap.size()==6){
 
 
                             sendToServer();
 
                         }
 
+                    } else {
+                        customDialog.endDialog();
+                        Toast.makeText(StudentDocumentUplaod.this, "UploadedFailed", Toast.LENGTH_SHORT).show();
                     }
-
-
-
-
-
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
                 }
             });
 
@@ -512,8 +607,8 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
             jsonBody.put("rdc", hashMap.get(RDCUPLOAD));
             jsonBody.put("marksheet", hashMap.get(MARKSHEET));
             jsonBody.put("pdl", hashMap.get(PREDEFENCE_LETTER));
-            jsonBody.put("thesisSub", hashMap.get(THESISSUBMITTED));
-            jsonBody.put("thesisawa", hashMap.get(PREDEFENCE_LETTER));
+            jsonBody.put("thesisub", hashMap.get(THESISSUBMITTED));
+            jsonBody.put("thesisawa", hashMap.get(THESISAWARDED));
             jsonBody.put("synopsis", hashMap.get(SYNOPSIS));
 
 
@@ -524,12 +619,14 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
             StringRequest stringRequest = new StringRequest(Request.Method.POST, ur, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    customDialog.endDialog();
 
+                    Log.d("errorupload", response);
                     try {
                         JSONObject myJsonObject = new JSONObject(response);
 
                         boolean success= myJsonObject.optBoolean("success");
-                        String message =myJsonObject.optString("message ");
+                        String message =myJsonObject.optString("message");
                         if(success){
                             Toast.makeText(StudentDocumentUplaod.this , "Success: "+message, Toast.LENGTH_SHORT).show();
 
@@ -545,7 +642,7 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
 
                     }
 
-                    customDialog.endDialog();
+
 
 
 
@@ -555,7 +652,7 @@ public class StudentDocumentUplaod extends AppCompatActivity implements View.OnC
                 public void onErrorResponse(VolleyError error) {
                     customDialog.endDialog();
 
-
+                    Log.d("errorupload", error.toString());
                     Toast.makeText(StudentDocumentUplaod.this , "Error:"+error.toString().trim(), Toast.LENGTH_LONG).show();
 
 

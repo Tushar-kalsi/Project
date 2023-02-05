@@ -22,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tushar.project.databinding.ActivityTitleSubmissionBinding;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,20 +53,87 @@ public class TitleSubmission extends AppCompatActivity implements View.OnClickLi
 
         binding.button4.setOnClickListener(this);
 
+        getSubmittedTitle(enrollment_number);
+
+
     }
 
+    public void getSubmittedTitle(String enrollment_number){
+
+        customDialog.startDialog();
+        String url ="https://r2cpyewdih.execute-api.ap-south-1.amazonaws.com/dev/title";
+        url+="?EN="+enrollment_number;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject myJsonObject = new JSONObject(response);
+
+                            boolean success= myJsonObject.optBoolean("success");
+                            JSONArray data =myJsonObject.optJSONArray("message");
+
+                            if(success ){
+
+                                if(data.length()>0){
+
+                                    JSONObject titleObject=data.getJSONObject(0);
+
+                                    binding.titleSubmissionInput.setText(titleObject.optString("title"));
+                                    binding.button4.setText("Modify");
+
+
+
+                                }
+
+
+
+                            }
+
+                        }
+                        catch (Exception e){
+
+                            Toast.makeText(TitleSubmission.this , "There is some error ", Toast.LENGTH_LONG).show();
+                        }
+
+                        customDialog.endDialog();
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(TitleSubmission.this , "There is some error ", Toast.LENGTH_LONG).show();
+
+                customDialog.endDialog();
+
+
+            }
+        });
+
+// Add the request to the RequestQueue.
+        requestQueue.add(stringRequest);
+
+
+    }
     @Override
     public void onClick(View view) {
         if(binding.titleSubmissionInput.getText()!=null && binding.titleSubmissionInput.getText().toString().trim().length()>0){
             makeApiCall(binding.titleSubmissionInput.getText().toString());
 
         }else{
+
+
             binding.titleSubmissionInput.setError("Invalid Title");
 
         }
 
 
     }
+
 
     public void makeApiCall(String title){
 
