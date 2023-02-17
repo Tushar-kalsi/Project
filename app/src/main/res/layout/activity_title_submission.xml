@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <ScrollView
-        android:background="@color/superlightGrey"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#F9D1D1"
         tools:layout_editor_absoluteX="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+
             android:layout_height="match_parent"
             tools:context=".TitleSubmission">
 
@@ -43,7 +45,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/drawable_box"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#0B1354"
                 android:layout_marginTop="20dp"
                 android:textStyle="bold"
                 />
@@ -176,7 +178,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:backgroundTint="#0B1354"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleSubmissionLayout" />

@@ -8,7 +8,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:background="@color/superlightGrey"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StatusActivity">
+        android:backgroundTint="#F9D1D1"
+        tools:context=".StatusActivity">
 
         <TextView
             android:layout_width="wrap_content"
@@ -16,11 +17,11 @@
             android:id="@+id/titletext"
             app:layout_goneMarginTop="30dp"
             android:textSize="30dp"
+            android:textColor="#0B1354"
             android:text="Students Status"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/colorPrimary"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
             />

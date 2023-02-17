@@ -5,12 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools">
     <ScrollView
         android:layout_width="match_parent"
-        android:background="@color/superlightGrey"
+
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
+        android:background="#F9D1D1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".QIP_registration">
@@ -50,7 +50,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/drawable_box"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#165BAA"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
             />
@@ -370,6 +370,7 @@
             android:layout_height="55dp"
             android:layout_marginTop="10dp"
             android:text="Submit "
+            android:backgroundTint="#165BAA"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"

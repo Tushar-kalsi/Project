@@ -6,7 +6,7 @@
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/superlightGrey"
+        android:background="#F9D1D1"
         android:layout_height="match_parent"
         tools:context=".ViewPublication">
 
@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/colorPrimary"
+            android:textColor="#0B1354"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
             />
@@ -279,7 +279,7 @@
             app:layout_constraintTop_toBottomOf="@id/type_spinner"
             app:layout_constraintStart_toStartOf="@id/type_spinner"
             app:layout_constraintEnd_toEndOf="@id/type_spinner"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#F9D1D1"
             android:id="@+id/uploadButton"
             android:textColor="@color/black"
             android:drawableEnd="@drawable/ic_baseline_download_24"
@@ -293,6 +293,7 @@
             android:layout_height="55dp"
             android:layout_marginTop="10dp"
             android:text="Submit "
+            android:backgroundTint="#0B1354"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"

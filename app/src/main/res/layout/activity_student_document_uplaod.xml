@@ -10,6 +10,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:background="#F9D1D1"
             android:layout_height="match_parent"
             tools:context=".RAC_HOD">
 
@@ -43,7 +44,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/drawable_box"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#0B1354"
                 android:layout_marginTop="20dp"
                 android:textStyle="bold"
                 />
@@ -147,7 +148,7 @@
                 android:layout_width="0dp"
                 android:layout_height="63dp"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="#F9D1D1"
                 android:textColor="@color/black"
                 android:text="Upload"
                 android:textSize="20sp"
@@ -175,8 +176,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="63dp"
+                android:backgroundTint="#F9D1D1"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/white"
+
                 android:textColor="@color/black"
                 android:text="Upload"
                 android:textSize="20sp"
@@ -203,8 +205,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="63dp"
+                android:backgroundTint="#F9D1D1"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/white"
+
                 android:textColor="@color/black"
                 android:text="Upload"
                 android:textSize="20sp"
@@ -233,8 +236,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="63dp"
+                android:backgroundTint="#F9D1D1"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/white"
+
                 android:textColor="@color/black"
                 android:text="Upload"
                 android:textSize="20sp"
@@ -265,7 +269,8 @@
                 android:layout_width="0dp"
                 android:layout_height="63dp"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="#F9D1D1"
+
                 android:textColor="@color/black"
                 android:text="Upload"
                 android:textSize="20sp"
@@ -295,7 +300,7 @@
                 android:layout_width="0dp"
                 android:layout_height="63dp"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="#F9D1D1"
                 android:textColor="@color/black"
                 android:text="Upload"
                 android:textSize="20sp"
@@ -315,7 +320,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:backgroundTint="#0B1354"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/synopsisAwardedButton" />

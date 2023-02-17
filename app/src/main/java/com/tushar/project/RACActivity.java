@@ -127,6 +127,10 @@ public class RACActivity extends AppCompatActivity  {
 
         binding.nameInput.setText(name);
         String enrollment_number =preferences.getString("enrollment_number","");
+
+        if(view==STUDENT_VIEW){
+            makeRacCall(enrollment_number);
+        }
         binding.enrollmentNumberInput.setText(enrollment_number);
         binding.uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,13 +230,11 @@ public class RACActivity extends AppCompatActivity  {
                     uploadRACToServer(myurl , batch, enrollmentNumber, DOR );
                 } else {
                     customDialog.endDialog();
-                    Toast.makeText(RACActivity.this, "UploadedFailed", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(RACActivity.this, "UploadedFailed ", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
-
 
 
     }
@@ -380,8 +382,26 @@ public class RACActivity extends AppCompatActivity  {
                                     String supervisor=jsonObject.optString("SuperVisor");
                                     String coSuperVisor=jsonObject.optString("CoSupervisor");
                                     String documentLink=jsonObject.optString("Document");
+                                    int hodDoc=jsonObject.optInt("HodDocumentInserted");
+                                    String hodDocUrl=jsonObject.optString("HODDocument");
 
 
+                                    if(view==STUDENT_VIEW && hodDoc==1){
+
+                                        binding.documentUploadedByHod.setVisibility(View.VISIBLE);
+
+                                        binding.documentUploadedByHod.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                try {
+                                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(hodDocUrl));
+                                                    startActivity(browserIntent);
+                                                }catch (Exception e){
+
+                                                }
+                                            }
+                                        });
+                                    }
 
                                     binding.dorinput.setText(jsonObject.optString("DOR"));
 
@@ -405,8 +425,12 @@ public class RACActivity extends AppCompatActivity  {
 
                                             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(documentLink));
                                             startActivity(browserIntent);
+
                                         }
                                     });
+
+
+
 
 
                                 }

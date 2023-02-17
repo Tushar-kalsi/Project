@@ -1,11 +1,18 @@
 package com.tushar.project;
 
+import static com.tushar.project.ThesisSubmission.PICK_FILE;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
+import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +29,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.tushar.project.databinding.ActivityRacHodBinding;
 
 
@@ -29,6 +41,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.ref.ReferenceQueue;
 import java.util.HashMap;
@@ -40,7 +54,10 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
     private String selectedSuperVisior="", selectedCosuperVisor="";
     RequestQueue referenceQueue;
     ActivityRacHodBinding binding;
+    Uri hodUploadingFile;
     String ty;
+    StorageReference storageRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +72,10 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
         Intent intent=getIntent();
         String en =intent.getStringExtra("en");
        ty=intent.getStringExtra("ty");
+
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://project-44332.appspot.com");
+        storageRef = storage.getReference();
+
 
 
         makeRacCall(en);
@@ -73,11 +94,29 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
                 public void onClick(View view) {
 
 
-                    updateSuperVisor(en);
+                    Log.d("selectedURI", "Uri slected "+(hodUploadingFile==null));
+
+                    if(hodUploadingFile!=null){
+
+
+                        uploadHodFileToFireStore(en);
+
+                    }else{
+                        updateSuperVisor(en , " ",0);
+
+                    }
+
 
                 }
             });
 
+            binding.uploadDocumentHOD.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    accessPdf();
+                }
+            });
 
         }else{
             binding.coSuperVisorSpinnerTextview.setVisibility(View.VISIBLE);
@@ -123,8 +162,50 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
 
 
     }
+    private void uploadHodFileToFireStore(String enrollmentNumber){
 
-    private void updateSuperVisor(String enNumnber){
+
+        customDialog.startDialog();
+
+//        Uri file = Uri.fromFile(new File(bitmap.toString()));
+
+        StorageReference riversRef = storageRef.child("racUpload/"+enrollmentNumber+"_hod"+".pdf");
+
+        riversRef.putFile(hodUploadingFile).continueWithTask(new Continuation() {
+            @Override
+            public Object then(@NonNull Task task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return riversRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    // After uploading is done it progress
+                    // dialog box will be dismissed
+
+                    Uri uri = task.getResult();
+                    String myurl;
+                    myurl = uri.toString();
+
+                    updateSuperVisor(enrollmentNumber, myurl, 1);
+
+
+                } else {
+                    customDialog.endDialog();
+
+                    Toast.makeText(RAC_HOD.this, "UploadedFailed ", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void updateSuperVisor(String enNumnber, String myUrl, int uploaded ){
+
+
 
         String url =getString(R.string.domain_url)+"rac/modify";
         Log.d("errorVolley", url);
@@ -138,6 +219,20 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
             jsonBody.put("enrollment_number", enNumnber);
             jsonBody.put("supervisor", selectedSuperVisior);
             jsonBody.put("cosupervisor", selectedCosuperVisor);
+
+            if(uploaded==1){
+
+                jsonBody.put("HODDocument", myUrl);
+                jsonBody.put("HodDocumentInserted",1);
+
+
+            }else{
+
+                jsonBody.put("HODDocument", " ");
+                jsonBody.put("HodDocumentInserted",0);
+
+
+            }
 
 
             final String requestBody = jsonBody.toString();
@@ -358,5 +453,34 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
 // Add the request to the RequestQueue.
         referenceQueue.add(stringRequest);
     }
+
+
+    public void accessPdf(){
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/pdf");
+        startActivityForResult(intent, PICK_FILE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_FILE && resultCode == RESULT_OK){
+            if (data != null){
+                Uri uri = data.getData();
+                Log.d("selectedURI", "uri data "+uri.toString());
+                hodUploadingFile=uri;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                    binding.uploadDocumentHOD.setBackgroundColor(getColor(R.color.orange));
+                }
+
+            }
+        }
+
+    }
+
 
 }

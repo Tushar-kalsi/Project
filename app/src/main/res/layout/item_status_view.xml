@@ -9,6 +9,7 @@
     android:background="@drawable/border"
     android:layout_width="match_parent"
     android:elevation="5dp"
+    android:backgroundTint="#F9D1D1"
     android:padding="10dp"
     android:layout_marginTop="5dp"
     android:layout_marginStart="10dp"

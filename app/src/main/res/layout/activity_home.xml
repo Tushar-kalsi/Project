@@ -14,7 +14,7 @@
 
 
 <androidx.constraintlayout.widget.ConstraintLayout
-
+    android:background="#F9D1D1"
     android:paddingBottom="50sp"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="40sp"
         android:layout_marginStart="10sp"
-        android:textColor="@color/colorAccent"
+        android:textColor="#0B1354"
         />
 
     <ImageView
@@ -81,9 +81,10 @@
         app:layout_constraintTop_toBottomOf="@id/helloChampText"
         android:text="Welcome to the smart \nportal"
         android:layout_marginTop="10sp"
+
         android:id="@+id/welcome_textView"
         android:fontFamily="@font/montserrat_semibold"
-        android:textColor="@color/light_grey"
+        android:textColor="#7F0B1354"
         android:textSize="20sp"
         />
 
@@ -97,6 +98,7 @@
         app:cardCornerRadius="7dp"
         android:layout_marginStart="20dp"
         android:id="@+id/registrationCard"
+        app:cardBackgroundColor="#FFA4B6"
         android:layout_marginTop="30dp"
         app:layout_constraintEnd_toStartOf="@id/thesis"
         android:layout_height="200dp"
@@ -129,7 +131,7 @@
                 android:textSize="25dp"
                 android:id="@+id/textStudentProfileText"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:text="Registration"
                 app:layout_constraintStart_toStartOf="@id/image1"
                 app:layout_constraintEnd_toEndOf="@id/image1"
@@ -208,6 +210,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_height="200dp"
+        app:cardBackgroundColor="#FFA4B6"
         app:cardCornerRadius="7dp"
         android:id="@+id/courseWorkCardView"
         android:layout_marginEnd="20dp"
@@ -243,7 +246,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textSize="25dp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:text="Course work"
                 app:layout_constraintStart_toStartOf="@id/courseworkImage"
                 app:layout_constraintEnd_toEndOf="@id/courseworkImage"
@@ -264,7 +267,7 @@
         android:layout_width="0dp"
         android:layout_height="200dp"
         app:cardCornerRadius="7dp"
-        app:cardBackgroundColor="#7FCE7672"
+        app:cardBackgroundColor="#7F3BA8BE"
         android:id="@+id/RAC_upload"
         android:layout_marginTop="10dp"
         android:layout_weight="1.0"
@@ -319,10 +322,11 @@
         android:layout_width="0dp"
         android:layout_height="200dp"
         app:cardCornerRadius="7dp"
-        app:cardBackgroundColor="@color/white"
+        app:cardBackgroundColor="#FFA4B6"
         android:id="@+id/documentUpload"
         android:layout_marginTop="10dp"
         android:layout_weight="1.0"
+
         android:elevation="5dp"
         app:layout_constraintStart_toStartOf="@id/RAC_upload"
         app:layout_constraintStart_toEndOf="@id/RAC_upload"
@@ -355,7 +359,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textSize="25dp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:text="Doc. Upload"
                 app:layout_constraintStart_toStartOf="@id/image7"
                 app:layout_constraintEnd_toEndOf="@id/image7"
