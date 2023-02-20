@@ -180,9 +180,15 @@ public class CourseWork extends AppCompatActivity {
                                         binding.uploadButton.setVisibility(View.GONE);
 
                                     }else{
+                                        String finalDocument = document;
+                                        binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(finalDocument));
+                                                startActivity(browserIntent);
+                                            }
+                                        });
 
-                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(document));
-                                        startActivity(browserIntent);
 
 
                                     }
@@ -231,14 +237,17 @@ public class CourseWork extends AppCompatActivity {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
 
+
                         try {
                             JSONObject myJsonObject = new JSONObject(response);
 
                             boolean success= myJsonObject.optBoolean("success");
 
-
+                            Log.d("attemptCount", "boolean attempt "+success + "  "+response);
                             if(success){
-                                JSONArray data =myJsonObject.optJSONArray("message");
+                                JSONArray data =myJsonObject.optJSONArray("results");
+
+
                                 if(data==null){
                                     attempt=0;
 
@@ -247,6 +256,7 @@ public class CourseWork extends AppCompatActivity {
                                     attempt=data.length();
 
                                 }
+                                Log.d("attemptCount", "Counting attempt "+attempt);
 
                                 binding.uploadButton.setOnClickListener(new View.OnClickListener() {
                                     @Override

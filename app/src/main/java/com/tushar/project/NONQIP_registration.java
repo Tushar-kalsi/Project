@@ -258,6 +258,8 @@ public class NONQIP_registration extends AppCompatActivity {
                             finish();
 
                         }else{
+                            Log.d("errorVolley", response);
+
                             Toast.makeText(NONQIP_registration.this , "Error", Toast.LENGTH_LONG).show();
 
                         }

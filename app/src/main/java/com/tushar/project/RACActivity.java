@@ -405,7 +405,7 @@ public class RACActivity extends AppCompatActivity  {
 
                                     binding.dorinput.setText(jsonObject.optString("DOR"));
 
-                                    if(view==TEACHER_VIEW) {
+                                    if(view==TEACHER_VIEW || view==STUDENT_VIEW) {
                                         if (!supervisor.equals("null"))
                                             binding.superVisorTextView.setText(supervisor);
                                         if (!coSuperVisor.equals("null"))
