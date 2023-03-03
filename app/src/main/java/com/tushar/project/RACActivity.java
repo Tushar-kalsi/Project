@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +52,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 import com.tushar.project.databinding.ActivityRacactivityBinding;
 
 import org.json.JSONArray;
@@ -63,7 +66,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +77,8 @@ public class RACActivity extends AppCompatActivity  {
     public static final int STUDENT_VIEW=1;
     public static final int TEACHER_VIEW=2;
     public static final int HOD_VIEW=3;
+
+    public static final String KEY_RAC_STUDENT_FORM="rac_data";
 
     private static final int PICK_FILE = 1;
     PdfRenderer pdfRenderer;
@@ -83,25 +90,42 @@ public class RACActivity extends AppCompatActivity  {
     StorageReference storageRef;
     CustomDialog customDialog;
     int view=STUDENT_VIEW;
+    String date;
+    final Calendar myCalendar= Calendar.getInstance();
+    String dateSelected="";
 
+    public static final String KEY_RAC_DATA="data_rac";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this , R.layout.activity_racactivity);
-
+        customDialog=new CustomDialog(this , "Loading ");
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://project-44332.appspot.com");
         storageRef = storage.getReference();
 
         requestQueue= Volley.newRequestQueue(this);
         preferences= PreferenceManager.getDefaultSharedPreferences(getApplication());
 
+
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar c = Calendar.getInstance();
+        date = sdf.format(c.getTime());
+
         view=preferences.getInt("type", STUDENT_VIEW);
+
 
         if(view==TEACHER_VIEW) {
             customDialog = new CustomDialog(this, "Loading Please wait ....");
             Intent intent = getIntent();
-            String enNumnber = intent.getStringExtra("en");
+
+            String gsonData=intent.getStringExtra(KEY_RAC_DATA);
+            Gson gson = new Gson();
+
+            RacDataModel user = gson.fromJson(gsonData, RacDataModel.class);
+            binding.enrollmentNumberInput.setText(user.enrollment_number);
+
             binding.titletext.setText("RAC Information");
             binding.enrollmentNumberInput.setEnabled(false);
             binding.uploadButton.setText("View Document");
@@ -114,11 +138,77 @@ public class RACActivity extends AppCompatActivity  {
                     finish();
                 }
             });
-            makeRacCall(enNumnber);
+
+
+            binding.nameInput.setText(user.name);
+            binding.enrollmentNumberInput.setText(user.enrollment_number);
+            binding.dorinput.setText(user.dorDate);
+            binding.batchInput.setText(user.batch);
+            String supervisor=user.supervisor;
+            String coSuperVisor=user.coSuperVisor;
+            String documentLink=user.documentLink;
+            int hodDoc=user.hodDoc;
+            String hodDocUrl=user.hodDocUrl;
+            String departmentName =user.departmentName;
+
+            if( hodDoc==1){
+
+                binding.documentUploadedByHod.setVisibility(View.VISIBLE);
+
+                binding.documentUploadedByHod.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(hodDocUrl));
+                            startActivity(browserIntent);
+                        }catch (Exception e){
+
+                        }
+                    }
+                });
+            }
+
+            binding.dorinput.setText(user.dorDate);
+
+
+            if (!supervisor.equals("null"))
+                binding.superVisorTextView.setText(supervisor);
+            if (!coSuperVisor.equals("null"))
+                binding.coSuperVisorSpinnerTextview.setText(coSuperVisor);
+
+            if(!departmentName.equals("null")){
+                binding.departmentSpinnerTextView.setText(departmentName);
+
+            }
+
+
+            binding.uploadButton.setText("View Document");
+
+            binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    try{
+
+
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(documentLink));
+                        startActivity(browserIntent);
+
+                    }
+                    catch (Exception e){
+
+                        Log.d("errorVolley", "clicked "+documentLink);
+
+                    }
+                }
+            });
+
+          //  makeRacCall(enNumnber);
 
 
         }
-        else if (view==STUDENT_VIEW || view==HOD_VIEW){
+        else if ( view==HOD_VIEW){
 
 
             customDialog=new CustomDialog(this, "Uploading Image ...." );
@@ -128,18 +218,16 @@ public class RACActivity extends AppCompatActivity  {
         binding.nameInput.setText(name);
         String enrollment_number =preferences.getString("enrollment_number","");
 
-        if(view==STUDENT_VIEW){
-            makeRacCall(enrollment_number);
-        }
+
+
+
+
         binding.enrollmentNumberInput.setText(enrollment_number);
         binding.uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
                 accessPdf();
-
-
 
             }
         });
@@ -171,9 +259,13 @@ public class RACActivity extends AppCompatActivity  {
                           }else{
                               String batch=binding.batchInput.getText().toString().trim();
                               String enrollmentNumber =binding.enrollmentNumberInput.getText().toString().trim();
-                              String DOR =binding.dorinput.getText().toString().trim();
 
-                              uploadRac(batch, enrollmentNumber, DOR);
+
+                              if(dateSelected!=null && dateSelected.length()>0)
+                                uploadRac(batch, enrollmentNumber, dateSelected);
+                              else{
+                                  binding.dorlayout.setError("Please select date");
+                              }
 
 
                           }
@@ -195,6 +287,202 @@ public class RACActivity extends AppCompatActivity  {
 
 
         }
+
+
+
+        else if(view==STUDENT_VIEW){
+
+            Intent intent=getIntent();
+
+            String gsonData=intent.getStringExtra(KEY_RAC_STUDENT_FORM);
+            Gson gson = new Gson();
+
+            RacDataModel user = gson.fromJson(gsonData, RacDataModel.class);
+
+
+
+            DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int day) {
+                    myCalendar.set(Calendar.YEAR, year);
+                    myCalendar.set(Calendar.MONTH,month);
+                    myCalendar.set(Calendar.DAY_OF_MONTH,day);
+
+                    if(month<=9){
+                        dateSelected=year+"/0"+month+"/"+day;
+                    }
+                    if(day<=9){
+                        dateSelected=year+"/0"+month+"/0"+day;
+                    }
+                    if(month>9 || day>9) {
+                        dateSelected = year + "/" + month + "/" + day;
+                    }
+
+
+                    binding.dorinput.setText(dateSelected);
+
+                }
+            };
+
+
+
+
+            String name =preferences.getString("name", "");
+            binding.nameInput.setText(name);
+            String enrollment_number =preferences.getString("enrollment_number","");
+
+
+            binding.enrollmentNumberInput.setText(enrollment_number);
+
+            if(user!=null){
+
+
+            binding.nameInput.setText(user.name);
+            binding.enrollmentNumberInput.setText(user.enrollment_number);
+            binding.dorinput.setText(user.dorDate);
+            binding.batchInput.setText(user.batch);
+            String supervisor=user.supervisor;
+            String coSuperVisor=user.coSuperVisor;
+            String documentLink=user.documentLink;
+            int hodDoc=user.hodDoc;
+            String hodDocUrl=user.hodDocUrl;
+            String departmentName =user.departmentName;
+
+            if( hodDoc==1){
+
+                binding.documentUploadedByHod.setVisibility(View.VISIBLE);
+
+                binding.documentUploadedByHod.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(hodDocUrl));
+                            startActivity(browserIntent);
+                        }catch (Exception e){
+
+                        }
+                    }
+                });
+            }
+
+            binding.dorinput.setText(user.dorDate);
+
+
+                if (!supervisor.equals("null"))
+                    binding.superVisorTextView.setText(supervisor);
+                if (!coSuperVisor.equals("null"))
+                    binding.coSuperVisorSpinnerTextview.setText(coSuperVisor);
+
+                if(!departmentName.equals("null")){
+                    binding.departmentSpinnerTextView.setText(departmentName);
+
+                }
+
+
+            binding.uploadButton.setText("View Document");
+
+            binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    try{
+
+
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(documentLink));
+                        startActivity(browserIntent);
+
+                    }
+                    catch (Exception e){
+
+                        Log.d("errorVolley", "clicked "+documentLink);
+                    }
+                }
+            });
+
+
+
+
+        }else{
+
+                binding.dorlayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        new DatePickerDialog(RACActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+                    }
+                });
+
+                binding.dorinput.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Log.d("errorWq", "clicked");
+
+                        new DatePickerDialog(RACActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+                    }
+                });
+
+                binding.uploadButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        accessPdf();
+
+                    }
+                });
+
+                binding.button4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                        if(binding.enrollmentNumberInput.getText()==null || binding.enrollmentNumberInput.getText().toString().trim().length()==0){
+
+                            binding.enrollmentLayout.setError("Invalid Enrollment Number");
+                        }else{
+
+                            if(binding.dorinput.getText()==null || binding.dorinput.getText().toString().trim().length()==0){
+                                binding.dorlayout.setError("Invalid DOR ");
+
+                            }
+                            else{
+
+                                if(binding.batchInput.getText()==null || binding.batchInput.getText().toString().trim().length()==0){
+                                    binding.batchLayout.setError("Invalid batch");
+                                }else{
+
+                                    if(bitmap==null ){
+                                        binding.uploadButton.setError("Upload Image");
+
+                                    }else{
+                                        String batch=binding.batchInput.getText().toString().trim();
+                                        String enrollmentNumber =binding.enrollmentNumberInput.getText().toString().trim();
+
+
+                                        if(dateSelected!=null && dateSelected.length()>0)
+                                            uploadRac(batch, enrollmentNumber, dateSelected);
+                                        else{
+                                            binding.dorlayout.setError("Please select date");
+                                        }
+
+
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                });
+
+
+            }
+
+        }
+
+
 
     }
 
@@ -248,10 +536,11 @@ public class RACActivity extends AppCompatActivity  {
         try {
 
             JSONObject jsonBody = new JSONObject();
-            jsonBody.put("DOR", DOR);
+            jsonBody.put("DOR", dateSelected);
             jsonBody.put("enrollment_number", enrollmentNumber);
             jsonBody.put("batch", batch);
             jsonBody.put("document", downloadUrl);
+            jsonBody.put("date", date);
 
 
 
@@ -273,6 +562,7 @@ public class RACActivity extends AppCompatActivity  {
                         String message =myJsonObject.optString("message ");
                         if(success){
                             Toast.makeText(RACActivity.this , "Success: "+message, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(RACActivity.this, home.class) );
                             finish();
                         }else{
                             Toast.makeText(RACActivity.this , "Error", Toast.LENGTH_LONG).show();
@@ -384,7 +674,7 @@ public class RACActivity extends AppCompatActivity  {
                                     String documentLink=jsonObject.optString("Document");
                                     int hodDoc=jsonObject.optInt("HodDocumentInserted");
                                     String hodDocUrl=jsonObject.optString("HODDocument");
-
+                                    String departmentName =jsonObject.optString("DepartmentName");
 
                                     if(view==STUDENT_VIEW && hodDoc==1){
 
@@ -410,6 +700,11 @@ public class RACActivity extends AppCompatActivity  {
                                             binding.superVisorTextView.setText(supervisor);
                                         if (!coSuperVisor.equals("null"))
                                             binding.coSuperVisorSpinnerTextview.setText(coSuperVisor);
+
+                                        if(!departmentName.equals("null")){
+                                            binding.departmentSpinnerTextView.setText(departmentName);
+
+                                        }
 
                                     }else{
 
@@ -503,6 +798,7 @@ public class RACActivity extends AppCompatActivity  {
             page.render(mBitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
             // imageview1.setImageBitmap(mBitmap);
             page.close();
+
             //textview1.setText((_n + 1) + "/" + total_pages);
         }
     }

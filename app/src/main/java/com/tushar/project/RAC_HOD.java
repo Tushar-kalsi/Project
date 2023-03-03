@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 import com.tushar.project.databinding.ActivityRacHodBinding;
 
 
@@ -50,13 +51,14 @@ import java.util.Map;
 
 public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     CustomDialog customDialog;
-    String[] superVisorStringArray, coSuperVisorStringArray;
-    private String selectedSuperVisior="", selectedCosuperVisor="";
+    String[] superVisorStringArray, coSuperVisorStringArray, departmentStringArray;
+    private String selectedSuperVisior="", selectedCosuperVisor="", slectedDepartment="";
     RequestQueue referenceQueue;
     ActivityRacHodBinding binding;
     Uri hodUploadingFile;
     String ty;
     StorageReference storageRef;
+    public static final String KEY_DATA="data_key";
 
 
     @Override
@@ -69,16 +71,22 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
 
         superVisorStringArray= getResources().getStringArray(R.array.array_supervisor);
         coSuperVisorStringArray=getResources().getStringArray(R.array.array_cosupervisor);
+        departmentStringArray=getResources().getStringArray(R.array.department_array);
+
         Intent intent=getIntent();
+
         String en =intent.getStringExtra("en");
-       ty=intent.getStringExtra("ty");
+        ty=intent.getStringExtra("ty");
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://project-44332.appspot.com");
         storageRef = storage.getReference();
 
 
 
-        makeRacCall(en);
+        String json=intent.getStringExtra(KEY_DATA);
+        RacDataModel racDataModel=new Gson().fromJson(json , RacDataModel.class);
+
+        makeRacCall(racDataModel);
 
         if(ty.equals("2")){
 
@@ -86,7 +94,7 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
             binding.superVisorTextView.setVisibility(View.GONE);
             binding.coSuperVisorSpinner.setVisibility(View.VISIBLE);
             binding.superVisorSpinner.setVisibility(View.VISIBLE);
-
+            binding.departmentSpinnerTextView.setVisibility(View.GONE);
 
             binding.button4.setText("Modify");
             binding.button4.setOnClickListener(new View.OnClickListener() {
@@ -156,9 +164,16 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
         binding.coSuperVisorSpinner.setOnItemSelectedListener(this);
 
 
+        arrayAdapter1 = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, departmentStringArray);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.departmentSpinner.setAdapter(arrayAdapter1);
+
+
+        binding.departmentSpinner.setOnItemSelectedListener(this);
+
+
 
         binding.uploadButton.setText("View Document");
-
 
 
     }
@@ -219,6 +234,8 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
             jsonBody.put("enrollment_number", enNumnber);
             jsonBody.put("supervisor", selectedSuperVisior);
             jsonBody.put("cosupervisor", selectedCosuperVisor);
+            jsonBody.put("DepartmentName",slectedDepartment );
+
 
             if(uploaded==1){
 
@@ -362,6 +379,21 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
 
             }
 
+        }else if (adapterView.getId()==binding.departmentSpinner.getId()){
+
+
+            if(i==0){
+                slectedDepartment="";
+                Log.d("errorVolley", "co-supervisor none selected ");
+
+            }else {
+
+                Log.d("errorVolley", "co-supervisor selected "+departmentStringArray[i]);
+                slectedDepartment=departmentStringArray[i];
+
+            }
+
+
         }
 
     }
@@ -371,87 +403,46 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
 
     }
 
-    private void makeRacCall(String enNumnber) {
-
-        String url =getString(R.string.domain_url)+"rac?en="+enNumnber;
-        Log.d("errorVolley", url);
-        customDialog.startDialog();
+    private void makeRacCall(RacDataModel racDataModel) {
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
+        if(racDataModel==null)
+            return;
 
-                        try {
-                            JSONObject myJsonObject = new JSONObject(response);
-
-                            boolean success= myJsonObject.optBoolean("success");
-                            JSONArray data =myJsonObject.optJSONArray("results1");
-
-                            if(success){
+        binding.nameInput.setText(racDataModel.getName());
+        binding.enrollmentNumberInput.setText(racDataModel.getEnrollment_number());
+        binding.dorinput.setText(racDataModel.dorDate);
+        binding.batchInput.setText(racDataModel.batch);
+        String supervisor= racDataModel.supervisor;
+        String coSuperVisor= racDataModel.coSuperVisor;
+        String documentLink= racDataModel.getDocumentLink();
 
 
-                                for(int i=0;i<data.length();i++){
+        binding.coSuperVisorSpinnerTextview.setText(coSuperVisor);
+        binding.superVisorTextView.setText(supervisor);
 
-                                    JSONObject jsonObject=data.getJSONObject(i);
-
-                                    binding.nameInput.setText(jsonObject.optString("name"));
-                                    binding.enrollmentNumberInput.setText(jsonObject.optString("EN"));
-                                    binding.dorinput.setText(jsonObject.optString("DOR"));
-                                    binding.batchInput.setText(jsonObject.optString("Batch"));
-                                    String supervisor=jsonObject.optString("SuperVisor");
-                                    String coSuperVisor=jsonObject.optString("CoSupervisor");
-                                    String documentLink=jsonObject.optString("Document");
+        binding.dorinput.setText(racDataModel.dorDate);
 
 
-                                    binding.coSuperVisorSpinnerTextview.setText(coSuperVisor);
-                                    binding.superVisorTextView.setText(supervisor);
+        binding.uploadButton.setText("View Document");
 
-                                    binding.dorinput.setText(jsonObject.optString("DOR"));
-
-
-                                    binding.uploadButton.setText("View Document");
-
-                                    binding.uploadButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-
-                                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(documentLink));
-                                            startActivity(browserIntent);
-                                        }
-                                    });
-
-
-                                }
-
-
-                            }
-
-                        }
-                        catch (Exception e){
-
-                            Log.d("errorVolley", "Inside exeption "+e.toString());
-                        }
-
-                        customDialog.endDialog();
-
-
-                    }
-                }, new Response.ErrorListener() {
+        binding.uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RAC_HOD.this , "There is some error ", Toast.LENGTH_LONG).show();
+            public void onClick(View view) {
 
-                customDialog.endDialog();
-
-
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(documentLink));
+                startActivity(browserIntent);
             }
         });
 
+
+
+
+
+
+
 // Add the request to the RequestQueue.
-        referenceQueue.add(stringRequest);
+
     }
 
 

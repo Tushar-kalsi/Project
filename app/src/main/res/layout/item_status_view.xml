@@ -214,7 +214,7 @@
         app:layout_constraintTop_toTopOf="@+id/ThesisSubmissionButton"
         app:layout_constraintBottom_toBottomOf="@id/ThesisSubmissionButton"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Thesis Submission"
+        android:text="Paper Submission"
         />
 
 

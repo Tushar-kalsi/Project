@@ -14,6 +14,15 @@
     <string name="title_activity_nonqip_registration">NONQIP_registration</string>
     <string name="logout">Logout</string>
 
+    <string-array name="department_array">
+        <item>Select Department</item>
+        <item>DR. AA</item>
+        <item>DR. BB</item>
+        <item>DR. CC</item>
+        <item>DR. VV</item>
+        <item>DR. VZ</item>
+
+    </string-array>
 
     <string-array name="array_jornals">
         <item>Select Type</item>

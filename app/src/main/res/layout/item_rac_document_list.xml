@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10sp"
+    android:layout_margin="5sp"
+    android:layout_height="wrap_content">
+    <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:layout_height="wrap_content"
+        android:text="1"
+        app:layout_constraintEnd_toStartOf="@+id/dateTextView"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:id="@+id/serialNumberText"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="12/02/2022"
+        app:layout_constraintEnd_toStartOf="@+id/seeMoreTextView"
+        android:id="@+id/dateTextView"
+        app:layout_constraintStart_toEndOf="@id/serialNumberText"
+        app:layout_constraintTop_toTopOf="@id/serialNumberText"
+        app:layout_constraintBottom_toBottomOf="@id/serialNumberText"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="10sp"
+        />
+
+    <TextView
+        android:id="@+id/seeMoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" See More>"
+        android:textColor="@color/yellow"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="@+id/dateTextView"
+        app:layout_constraintBottom_toBottomOf="@id/dateTextView"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

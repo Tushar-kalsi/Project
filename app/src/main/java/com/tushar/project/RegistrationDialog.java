@@ -16,7 +16,6 @@ public class RegistrationDialog {
     private Dialog dialog;
     private RegistrationSelection registrationSelection;
 
-
     RegistraionSelectionBinding binding;
 
 
