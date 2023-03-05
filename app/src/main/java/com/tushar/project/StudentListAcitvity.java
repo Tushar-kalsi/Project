@@ -581,7 +581,7 @@ public class StudentListAcitvity extends AppCompatActivity  implements RecyclerV
 
 
 
-            makeApiCallForViewingRacOfParticularStudent(studentModel.getEN());
+            //makeApiCallForViewingRacOfParticularStudent(studentModel.getEN());
 
 
         }

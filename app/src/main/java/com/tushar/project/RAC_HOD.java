@@ -126,6 +126,32 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
                 }
             });
 
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, superVisorStringArray);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            binding.superVisorSpinner.setAdapter(arrayAdapter);
+
+            binding.superVisorSpinner.setOnItemSelectedListener(this);
+
+
+            ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, coSuperVisorStringArray);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            binding.coSuperVisorSpinner.setAdapter(arrayAdapter1);
+
+
+            binding.coSuperVisorSpinner.setOnItemSelectedListener(this);
+
+
+            arrayAdapter1 = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, departmentStringArray);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            binding.departmentSpinner.setAdapter(arrayAdapter1);
+
+
+            binding.departmentSpinner.setOnItemSelectedListener(this);
+
+
+
+            binding.uploadButton.setText("View Document");
+
         }else{
             binding.coSuperVisorSpinnerTextview.setVisibility(View.VISIBLE);
             binding.superVisorTextView.setVisibility(View.VISIBLE);
@@ -149,31 +175,7 @@ public class RAC_HOD extends AppCompatActivity implements AdapterView.OnItemSele
         }
 
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, superVisorStringArray);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.superVisorSpinner.setAdapter(arrayAdapter);
 
-        binding.superVisorSpinner.setOnItemSelectedListener(this);
-
-
-        ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, coSuperVisorStringArray);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.coSuperVisorSpinner.setAdapter(arrayAdapter1);
-
-
-        binding.coSuperVisorSpinner.setOnItemSelectedListener(this);
-
-
-        arrayAdapter1 = new ArrayAdapter<String>(this,  android.R.layout.simple_spinner_item, departmentStringArray);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.departmentSpinner.setAdapter(arrayAdapter1);
-
-
-        binding.departmentSpinner.setOnItemSelectedListener(this);
-
-
-
-        binding.uploadButton.setText("View Document");
 
 
     }
